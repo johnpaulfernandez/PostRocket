@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create account</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" th:href="@{/css/register.css}" />
+    <style>
+      body {
+        background-image: url(/images/nature2.jpeg);
+      }
+      .error-message {
+        color: #f0ad4e;
+        font-size: 12px;
+        margin-top: -15px;
+        margin-bottom: 10px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="form">
+      <div id="register">
+        <div><h1>Create an account</h1></div>
+        <p>Already have an account? <a th:href="@{/signin}">Sign in</a></p>
+        <form id="registerForm" th:action="@{/registration-process}" th:object="${userDto}" method="post" enctype="utf8">
+          <input type="text" id="email" name="email" th:field="*{email}" placeholder="Email Address" />
+          <div class="error-message" id="emailError">Please enter a valid email address.</div>
+          <input type="password" id="password" name="password" th:field="*{password}" placeholder="Password" />
+          <div class="error-message" id="passwordError">
+            Password must be at least 8 characters long and contain at least one uppercase letter,
+            one lowercase letter, and one digit.
+          </div>
+          <section class="form-group">
+            <div class="sideBySide">
+              <div style="display: block">
+                <input type="text" id="firstName" name="name" th:field="*{firstName}" placeholder="First name" />
+                <div class="error-message" id="firstNameError">Please enter your first name.</div>
+              </div>
+
+              <div style="display: block">
+                <input
+                  class="secondField"
+                  type="text"
+                  id="lastName"
+                  name="name"
+                  th:field="*{lastName}"
+                  placeholder="Last name"
+                />
+                <div class="error-message secondField" id="lastNameError">
+                  Please enter your last name.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-group">
+            <p>Date of birth</p>
+            <div class="sideBySide">
+              <div style="display: block">
+                <select id="birthMonth" name="birthMonth" th:field="*{birthMonth}"
+                >
+                  <option value="" disabled selected>Month</option>
+                  <option value="01">January</option>
+                  <option value="02">February</option>
+                  <option value="03">March</option>
+                  <option value="04">April</option>
+                  <option value="05">May</option>
+                  <option value="06">June</option>
+                  <option value="07">July</option>
+                  <option value="08">August</option>
+                  <option value="09">September</option>
+                  <option value="10">October</option>
+                  <option value="11">November</option>
+                  <option value="12">December</option>
+                </select>
+                <div class="error-message" id="monthError" style="width: 150px; padding-top: 20px">
+                  Please enter the month.
+                </div>
+              </div>
+
+              <div style="display: block">
+                <input class="secondField" id="birthYear" name="birthYear" th:field="*{birthYear}" placeholder="Year" />
+                <div class="error-message secondField" id="yearError">Please enter the year.</div>
+                <span th:if="${#fields.hasErrors('birthYear')}"
+                      th:errors="*{birthYear}"></span><br/>
+              </div>
+            </div>
+          </section>
+          <button type="submit" class="top-margin">Create account</button>
+        </form>
+      </div>
+    </div>
+
+    <script th:src="@{/js/validate-account.js}"></script>
+  </body>
+</html>
