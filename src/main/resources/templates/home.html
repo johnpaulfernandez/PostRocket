@@ -1,14 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home page</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}" />
-  </head>
-  <body>
-    <div id="hero">
-        <div><h1>Welcome to PostRocket!</h1></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home page</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<section id="hero">
+  <div class="heading-section-left">
+    <h1>Welcome to Post Rocket</h1>
+    <div>
+      <h2>Drive engagement with AI-powered social posts.</h2>
+      <button class="accent" type="button">Create an account</button>
+      <button class="primary" type="button">Sign in</button>
+    </div>
+  </div>
+  <div class="heading-section-right">
+    <img src="">
+  </div>
+</section>
+<section id="use-cases">
+  <div>
+    <h2>Tailor captivating content for any goal</h2>
+  </div>
+  <div id="tiles" class="tiles-container">
+    <div class="item"
+         style="
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+            padding: 20px;
+            position: relative;
+            "
+    >
+      <div class="title">
+        <div class="icon-placeholder">
+          <img
+                  src="/images/event-icon.png"
+                  alt=""/>
+        </div>
       </div>
-  </body>
+    </div>
+  </div>
+</section>
+</body>
 </html>

@@ -1,41 +1,82 @@
 :root {
-    --base-color: #222831;
+    --base-color: #fff;
+    --action-color: #0265dc;
     --secondary-color: #393e46;
-    --third-color: #111;
-    --action-color: #f96d00;
-    --text-color: #f2f2f2;
+    --third-color: #222831;
+    --text-color: #2c2c2c;
 }
   
 body {
     margin-top: 2rem;
     height: 125vh;
-    font-family: Arial, sans-serif;
     font-size: 14px;
     background-size: cover;
-    background-blend-mode: hard-light;
-    background-color: var(--secondary-color);
-    color: white;
+    background-color: var(--base-color);
+    color: var(--text-color);
+    font-family: "Exo", sans-serif;
+    font-weight: 400;
+    font-optical-sizing: auto;
+    font-style: normal;
 }
 
-ul {
-    list-style-type: none;
-    overflow: hidden;
-}
-  
-li {
-  float: right;
+input, textarea, button {
+    font-family: inherit
 }
 
-li a {
-  display: block;
-  color: var(--text-color);
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
+section#hero {
+    padding: 26px 56px 64px 134px;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.heading-section-left {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    margin: 53px 0 37px;
+    width: 800px;
 }
 
-li a:hover {
-  background-color: var(--base-color);
+section#use-cases {
+    padding: 0 0 88px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#hero h1 {
+    font-size: 54px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 20px;
+    font-weight: 400;
+    color-scheme: light;
+    margin-bottom: 22px;
+    line-height: 34px;
+}
+
+button.accent {
+    background-color: var(--action-color);
+    color: var(--base-color);
+    border-color: transparent;
+    border-radius: 25px;
+    font-size: 16px;
+    padding: 10px 25px 10px;
+    margin-right: 16px;
+}
+
+button.primary {
+    background-color: transparent;
+    color: var(--text-color);
+    border-color: #000;
+    border-radius: 25px;
+    font-size: 16px;
+    padding: 10px 25px 10px;
 }
 
 .thumbnails:hover, .productCard:hover {
@@ -56,7 +97,6 @@ li a:hover {
     box-sizing: border-box;
     padding: 20px 80px;
     width: 396px;
-    color: var(--base-color);
   }
   
   .center {
@@ -81,18 +121,6 @@ li a:hover {
     box-sizing: border-box;
   }
   
-  button[type="submit"] {
-    border: none;
-    color: var(--text-color);
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    width: 100%;
-    background-color: var(--action-color);
-  }
-  
   #form {
     float: right;
   }
@@ -103,4 +131,16 @@ th {
 
 td {
   text-align: right;
+}
+
+button[type="submit"] {
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    background-color: var(--action-color);
+    color: var(--base-color);
 }
