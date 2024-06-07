@@ -1,0 +1,31 @@
+
+
+@media (min-width: 1440px) {
+    :root {
+        --grid-container-width: 1200px;
+    }
+}
+
+.foreground {
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    gap: 100px;
+    width: var(--grid-container-width);
+    margin: 0 auto;
+}
+
+section#heading-section {
+    margin-top: 2rem;
+}
+
+section#heading-section .title h2 {
+    font-size: 25px;
+    line-height: 32px;
+    width: 100%;
+    font-weight: 600;
+}
+
+textarea#details {
+    width: 100%;
+}

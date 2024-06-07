@@ -23,8 +23,8 @@ public class User {
     private String birthMonth;
     private String birthYear;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<GeneratedPost> generatedPost = new ArrayList<>();
+    @OneToMany(mappedBy = "name", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Request> requests = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",

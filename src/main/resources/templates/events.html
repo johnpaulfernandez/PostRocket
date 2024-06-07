@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}" />
+  <link rel="stylesheet" th:href="@{/css/create.css}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav>
+  <div class="branding">
+    <div class="header-icon">
+      <img src="/images/blog-icon.png" alt="">
+    </div>
+    Post Rocket
+  </div>
+  <div class="main">
+  </div>
+  <div class="util">
+    <a th:href="@{/signin}" class="signin">Sign in</a>
+  </div>
+</nav>
+<div class="foreground">
+  <section id="heading-section">
+    <div class="title">
+      <h2>Create a new post</h2>
+    </div>
+  </section>
+  <section id="input-section">
+    <form th:action="@{/create/events}" th:object="${userInput}" method="post">
+      <p><label for="details">What is the event you want to create a post about?</label></p>
+      <textarea id="details" name="details" rows="15" cols="150" th:field="*{text}">
+        You may include the following details:
+
+        - Event Title: This is the main headline of your event
+        - Event Description: Briefly describe the event, what it's about, and why people should attend.
+        - Event Date and Time: Include the specific date and time, considering time zones if relevant.
+        - Location (Physical or Virtual): Specify the physical location or the virtual platform where the event will be held (e.g., Zoom, YouTube Live).
+        - Event Website/Registration Link: If there's a dedicated event website or a registration link, include it here.
+        - Target Audience: Who is this event for? Understanding the audience helps tailor the post's tone and content.
+        - Event Hashtags: Are there any relevant hashtags people might use to find this event?
+      </textarea>
+      <br>
+      <input type="submit" value="Generate">
+      <table>
+        <tbody>
+        <tr th:each = "output : ${requestOutput}">
+          <td th:text = "${output}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </form>
+  </section>
+</div>
+</body>
+</html>
