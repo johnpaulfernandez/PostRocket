@@ -9,7 +9,6 @@
 }
   
 body {
-    margin-top: 2rem;
     height: 125vh;
     font-size: 14px;
     background-size: cover;
@@ -107,40 +106,21 @@ button.primary:hover {
     box-sizing: border-box;
     padding: 20px 80px;
     width: 396px;
-  }
-  
-  .center {
-    text-align: center;
-  }
-  
-  .top-margin {
-    margin-top: 50px;
-  }
-
-  
-  form {
-    margin-top: 32px;
-    padding-bottom: 32px;
-  }
-  
-  input {
-    width: 100%;
-    height: 100%;
-    padding: 8px;
-    margin-bottom: 20px;
-    box-sizing: border-box;
-  }
-  
-  #form {
-    float: right;
-  }
-
-th {
-    text-align: left;
 }
 
-td {
-  text-align: right;
+.center {text-align: center;
+}
+
+.top-margin {margin-top: 50px;
+}
+
+form {margin-top: 32px;padding-bottom: 32px;
+}
+
+input {width: 100%;height: 100%;padding: 8px;margin-bottom: 20px;box-sizing: border-box;
+}
+
+#form {float: right;
 }
 
 button[type="submit"] {
@@ -154,6 +134,67 @@ button[type="submit"] {
     background-color: var(--action-color);
     color: var(--base-color);
 }
+
+nav {
+    --global-nav-height: 64px;
+    height: var(--global-nav-height);
+    max-height: var(--global-nav-height);
+    min-height: var(--global-nav-height);
+    position: relative;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+    box-sizing: border-box;
+    display: flex;
+    outline: 0;
+    padding: 0 8px;
+    width: 100%;
+    z-index: 20100;
+}
+.branding {
+    flex: 0 0 auto;
+    height: 100%;
+    overflow: hidden;
+    align-items: center;
+    display: flex;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0 0 0 20px;
+}
+
+.header-icon {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 0 5px 0 0;
+}
+
+.header-icon img {
+    block-size: 24px;
+    inline-size: 24px;
+    color: inherit;
+    fill: currentColor;
+    pointer-events: none;
+    display: inline-block;
+}
+
+nav div.main {
+    flex: 1 1 auto;
+    height: 100%;
+    margin-left: 16px;
+    min-width: 0;
+    align-items: center;
+    display: flex;
+}
+
+.util .signin {
+    color: var(--text-color);
+    padding: 8px 12px;
+    font-weight: 600;
+    font-size: 14px;
+    vertical-align: middle;
+    text-decoration: none;
+}
+
 
 section#use-cases {
     --toolTileWidthDesktop: 278px;
@@ -172,7 +213,7 @@ section#use-cases {
 
 section#use-cases h2 {
     box-sizing: border-box;
-    font-size: 28px;
+    font-size: 25px;
     font-weight: 500;
     line-height: 36px;
     margin: 0;
@@ -191,11 +232,11 @@ section#use-cases h2 {
     margin-top: 32px;
     min-height: 166px;
     width: 100%;
-    padding: 0 calc(50% - var(--toolTileWidthDesktop)* 4 / 2 - var(--toolTileMarginDesktop)* 8 / 2);
+    padding: 0 calc(50% - var(--toolTileWidthDesktop)* 3 / 2 - var(--toolTileMarginDesktop)* 8 / 2);
 }
 
 .tile {
-    height: 187px;
+    height: 215px;
     margin: var(--toolTileMarginDesktop);
     width: var(--toolTileWidthDesktop);
 }

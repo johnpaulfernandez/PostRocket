@@ -2,7 +2,7 @@ const useCases = [
   {
     id: 1,
     title: "Events",
-    description: "Produce captivating social media posts about your events.",
+    description: "Craft inviting posts about your events.",
     icon: "/images/event-icon.png"
   },
   {
@@ -19,7 +19,7 @@ const useCases = [
   },
   {
     id: 4,
-    title: "Promotional Offers and Deals",
+    title: "Promos and Deals",
     description: "Create engaging content for social media to promote discounts, sales, and special offers.",
     icon: "/images/promo-icon.png"
   },
