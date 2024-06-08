@@ -1,33 +1,52 @@
 package org.perscholas.capstone.postrocket.controllers;
 
+import jakarta.validation.Valid;
+import org.perscholas.capstone.postrocket.dto.UserDTO;
+import org.perscholas.capstone.postrocket.models.GeneratedPost;
 import org.perscholas.capstone.postrocket.models.Request;
+import org.perscholas.capstone.postrocket.models.User;
 import org.perscholas.capstone.postrocket.models.UserInput;
+import org.perscholas.capstone.postrocket.services.RequestService;
+import org.perscholas.capstone.postrocket.services.UserService;
+import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
 import java.util.Map;
 
 @Controller
+@SessionAttributes("requestOutput")
 public class EventsController {
 
     private final OpenAiChatModel chatModel;
+
+    private final UserService userService;
+
+    private final RequestService requestService;
+
+
 
     record OutputRecord(List<String> output) {
     }
 
     @Autowired
-    public EventsController(OpenAiChatModel chatModel) {
+    public EventsController(OpenAiChatModel chatModel, UserService userService, RequestService requestService) {
         this.chatModel = chatModel;
+        this.userService = userService;
+        this.requestService = requestService;
     }
 
     @GetMapping("/create/events")
@@ -37,7 +56,7 @@ public class EventsController {
     }
 
     @PostMapping("/create/events")
-    public String generateThread(@ModelAttribute UserInput userInput, @ModelAttribute Request output, ModelMap map) {
+    public String generateThread(@ModelAttribute UserInput userInput, ModelMap map) {
         BeanOutputConverter<Request> outputConverter = new BeanOutputConverter<>(Request.class);
 
         String format = outputConverter.getFormat();
@@ -53,14 +72,27 @@ public class EventsController {
         PromptTemplate promptTemplate = new PromptTemplate(template, Map.of("text", userInput.getText(), "format", format));
         Prompt prompt = new Prompt(promptTemplate.createMessage());
 
-//        Generation generation = chatModel.call(prompt).getResult();
-//        Request requestOutput = outputConverter.convert(generation.getOutput().getContent());
+        Generation generation = chatModel.call(prompt).getResult();
+        Request requestOutput = outputConverter.convert(generation.getOutput().getContent());
 
-        Request requestOutput = null;
+//        Request requestOutput = null;
 
         map.addAttribute("userInput", userInput);
         map.addAttribute("requestOutput", requestOutput);
 
         return "events";
+    }
+
+    @PostMapping("/create/events/save")
+    public void saveThread(ModelMap map)
+    {
+        Request request = (Request) map.getAttribute("requestOutput");
+
+        for (GeneratedPost post : request.getPosts())
+        {
+            post.setId(request.getId());
+        }
+
+        requestService.saveRequest((Request) map.getAttribute("requestOutput"));
     }
 }

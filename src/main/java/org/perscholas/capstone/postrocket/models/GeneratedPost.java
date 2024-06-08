@@ -13,4 +13,6 @@ public class GeneratedPost {
     private int id;
 
     private String post;
+
+    private int requestId;
 }

@@ -51,20 +51,31 @@
     </form>
   </section>
 
-<!--  <section th:if="${requestOutput?.getPosts()?.size() > 1}" class="output-section">-->
+  <section th:if="${requestOutput?.getPosts()?.size() > 1}" class="output-section">
+    <h2>Generated tweets</h2>
+    <form th:action="@{/create/events/save}" th:object="${requestOutput}" method="post">
+      <div id="output-container">
+        <div class="post" th:each = "post : ${requestOutput?.getPosts()}">
+          <span th:text = "${post?.getPost()}"></span>
+        </div>
+        <div class="action-container">
+          <div><button type="submit" class="accent">Save thread</button></div>
+        </div>
+      </div>
+    </form>
+  </section>
+
+<!--  <section class="output-section">-->
+<!--    <form th:action="@{/create/events/save}" method="post">-->
 <!--    <h2>Generated tweets</h2>-->
-<!--    <div id="output-container">-->
-<!--      <div class="post" th:each = "post : ${requestOutput?.getPosts()}">-->
-<!--        <span th:text = "${post?.getPost()}"></span>-->
+<!--      <div id="output-container"></div>-->
+<!--      <div class="action-container">-->
+<!--        <div><button type="submit" class="accent">Save thread</button></div>-->
 <!--      </div>-->
-<!--    </div>-->
+<!--    </form>-->
 <!--  </section>-->
 
-  <section class="output-section">
-      <h2>Generated tweets</h2>
-      <div id="output-container"></div>
-    </section>
-  <script th:src="@{/js/generate-sample-data.js}"></script>
+<!--  <script th:src="@{/js/generate-sample-data.js}"></script>-->
 
 </div>
 </body>

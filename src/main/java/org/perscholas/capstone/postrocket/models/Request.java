@@ -21,6 +21,6 @@ public class Request {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "requestId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GeneratedPost> posts = new ArrayList<>();
 }
