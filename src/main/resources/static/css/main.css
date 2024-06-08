@@ -196,6 +196,19 @@ nav div.main {
     text-decoration: none;
 }
 
+.profile-icon {
+    vertical-align: middle;
+    box-sizing: content-box;
+
+    .profile-thumbnail {
+        border: 2px solid transparent;
+        background-clip: content-box;
+        width: 28px;
+        height: 28px;
+        display: block;
+    }
+}
+
 
 section#use-cases {
     --toolTileWidthDesktop: 278px;

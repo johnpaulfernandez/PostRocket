@@ -14,6 +14,7 @@ import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -52,6 +54,7 @@ public class EventsController {
     @GetMapping("/create/events")
     public String showEventsPage(@ModelAttribute UserInput userInput, Model model) {
         model.addAttribute("userInput", userInput);
+
         return "events";
     }
 
@@ -88,9 +91,13 @@ public class EventsController {
     {
         Request request = (Request) map.getAttribute("requestOutput");
 
-        for (GeneratedPost post : request.getPosts())
-        {
-            post.setId(request.getId());
+        UserDetails user = userService.loadUserByUsername(request.getUser().getEmail());
+
+        if (user != null) {
+            for (GeneratedPost post : request.getPosts())
+            {
+                post.setId(request.getId());
+            }
         }
 
         requestService.saveRequest((Request) map.getAttribute("requestOutput"));

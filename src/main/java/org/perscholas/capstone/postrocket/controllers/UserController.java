@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,8 @@ public class UserController {
     }
 
     @GetMapping("/signin")
-    public String showSignInForm() {
+    public String showSignInForm(@ModelAttribute User user, ModelMap map) {
+        map.addAttribute("user", user);
         return "signin";
     }
 

@@ -21,7 +21,10 @@
   <div class="main">
   </div>
   <div class="util">
-    <a th:href="@{/signin}" class="signin">Sign in</a>
+    <a th:if="${user == null}" th:href="@{/signin}" class="signin">Sign in</a>
+    <div th:if="${user != null}" class="profile-icon">
+      <a href="#" style="background-image: url(/images/profile-icon.png)" role="button" class="profile-thumbnail"></a>
+    </div>
   </div>
 </nav>
 
@@ -30,8 +33,8 @@
     <h1>Welcome to Post Rocket</h1>
     <div>
       <h2>Drive engagement with AI-powered social posts.</h2>
-      <button class="accent" type="button" th:onclick="|window.location.href='/register'|">Create an account</button>
-      <button class="primary" type="button" th:onclick="|window.location.href='/signin'|">Sign in</button>
+      <button th:if="${user == null}" class="accent" type="button" th:onclick="|window.location.href='/register'|">Create an account</button>
+      <button th:if="${user == null}"class="primary" type="button" th:onclick="|window.location.href='/signin'|">Sign in</button>
     </div>
   </div>
   <div class="heading-section-right">
@@ -56,7 +59,7 @@
                   </div>
                 </div>
                 <div class="item-description">Craft engaging posts for your next event.</div>
-                <button type="button" class="secondary">Try now</button>
+                <button type="button" class="secondary" th:onclick="|window.location.href='/create/events'|">Try now</button>
               </div>
             </div>
           </article>
