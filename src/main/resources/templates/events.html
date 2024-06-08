@@ -32,7 +32,7 @@
   </section>
   <section id="input-section">
     <form th:action="@{/create/events}" th:object="${userInput}" method="post">
-      <p><label for="details">What is the event you want to create a post about?</label></p>
+      <p><label for="details">What is the event that you want to create a post about?</label></p>
       <textarea id="details" name="details" rows="15" cols="150" th:field="*{text}">
         You may include the following details:
 
@@ -46,15 +46,25 @@
       </textarea>
       <br>
       <input type="submit" value="Generate">
-      <table>
-        <tbody>
-        <tr th:each = "output : ${requestOutput}">
-          <td th:text = "${output}"></td>
-        </tr>
-        </tbody>
-      </table>
+
     </form>
   </section>
+
+<!--  <section th:if="${requestOutput?.getPosts()?.size() > 1}" class="output-section">-->
+<!--    <h2>Generated tweets</h2>-->
+<!--    <div id="output-container">-->
+<!--      <div class="post" th:each = "post : ${requestOutput?.getPosts()}">-->
+<!--        <span th:text = "${post?.getPost()}"></span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </section>-->
+
+  <section class="output-section">
+      <h2>Generated tweets</h2>
+      <div id="output-container"></div>
+    </section>
+  <script th:src="@{/js/generate-sample-data.js}"></script>
+
 </div>
 </body>
 </html>
