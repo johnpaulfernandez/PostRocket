@@ -27,7 +27,12 @@ h2 {
 }
 
 textarea#details {
-    width: 100%;
+    width: 99.5%;
+}
+
+.action-container {
+    display: flex;
+    justify-content: flex-end;
 }
 
 #output-container .post {
@@ -48,6 +53,7 @@ textarea#details {
     outline: none;
     text-decoration: none;
     margin-bottom: 24px;
+    background-color: var(--gray-75);
 }
 
 #output-container .post:nth-child(1) {

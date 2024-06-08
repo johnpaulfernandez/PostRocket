@@ -2,7 +2,7 @@ const useCases = [
   {
     id: 1,
     title: "Events",
-    description: "Craft inviting posts about your events.",
+    description: "Craft engaging posts for your next event.",
     icon: "/images/event-icon.png"
   },
   {

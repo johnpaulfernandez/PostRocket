@@ -6,6 +6,7 @@
     --third-color: #222831;
     --text-color: #2c2c2c;
     --gray-300: #e1e1e1;
+    --gray-75: #fafafa;
 }
   
 body {
@@ -68,7 +69,6 @@ button.accent {
     border-radius: 25px;
     font-size: 16px;
     padding: 10px 25px 10px;
-    margin-right: 16px;
 }
 
 button.accent:hover {
@@ -82,6 +82,7 @@ button.primary {
     border-radius: 25px;
     font-size: 16px;
     padding: 10px 25px 10px;
+    margin-left: 16px;
 }
 
 button.primary:hover {

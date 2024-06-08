@@ -1,13 +1,7 @@
 package org.perscholas.capstone.postrocket.controllers;
 
-import org.perscholas.capstone.postrocket.models.GeneratedPost;
 import org.perscholas.capstone.postrocket.models.Request;
-import org.perscholas.capstone.postrocket.models.User;
 import org.perscholas.capstone.postrocket.models.UserInput;
-import org.perscholas.capstone.postrocket.services.UserServiceImpl;
-import org.springframework.ai.chat.messages.AssistantMessage;
-import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.converter.BeanOutputConverter;
@@ -19,13 +13,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 public class EventsController {
