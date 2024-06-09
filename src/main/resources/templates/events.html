@@ -46,8 +46,9 @@
   </section>
   <section id="input-section">
     <form th:action="@{/create/events}" th:object="${userInput}" method="post">
-      <p><label for="details">What is the event that you want to create a post about?</label></p>
-      <textarea id="details" name="text" rows="15" cols="150">
+      <div th:if="${userInput.getText() == null}">
+        <p><label for="details">What is the event that you want to create a post about?</label></p>
+        <textarea id="details" name="text" rows="15" cols="150">
 
         You may include the following details:
 
@@ -65,6 +66,13 @@
 
         - Event Hashtags: Are there any relevant hashtags people might use to find this event?
       </textarea>
+      </div>
+
+      <div th:if="${userInput.getText() != null}">
+        <p><label for="text">What is the event that you want to create a post about?</label></p>
+        <textarea id="text" name="text" rows="15" cols="150" th:field="*{text}"></textarea>
+      </div>
+
       <br>
       <div class="action-container">
         <div><button type="submit" class="accent">Generate</button></div>

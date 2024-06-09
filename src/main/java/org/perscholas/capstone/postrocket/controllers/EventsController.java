@@ -95,9 +95,14 @@ public class EventsController {
     @PostMapping("/create/events/save")
     public String saveThread(@ModelAttribute UserInput userInput, ModelMap map)
     {
+        UserDetails userDetails;
         Request request = (Request) map.getAttribute("requestOutput");
 
-        UserDetails userDetails = userService.loadUserByUsername(userServiceImpl.getUser().getEmail());
+        try {
+            userDetails = userService.loadUserByUsername(userServiceImpl.getUser().getEmail());
+        } catch (Exception e) {
+            return "signin";
+        }
 
         if (userDetails != null) {
             request.setUser(userService.getUserByEmail(userServiceImpl.getUser().getEmail()));

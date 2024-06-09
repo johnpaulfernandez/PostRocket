@@ -16,7 +16,7 @@
 }
 
 section#heading-section {
-    margin-top: 2rem;
+    margin-top: 4rem;
 }
 
 h2 {
@@ -26,13 +26,21 @@ h2 {
     font-weight: 600;
 }
 
-textarea#details {
+label[for="details"], label[for="text"] {
+    font-size: 18px;
+}
+
+textarea#details, textarea#text {
     width: 99.5%;
 }
 
 .action-container {
     display: flex;
     justify-content: flex-end;
+
+    button {
+        padding: 10px 40px;
+    }
 }
 
 #output-container .post {

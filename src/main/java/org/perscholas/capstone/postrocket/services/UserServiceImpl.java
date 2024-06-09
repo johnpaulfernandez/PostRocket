@@ -22,6 +22,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/*
+ This service bean also includes a method to store the User session attribute object and another method to retrieve it.
+ */
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
