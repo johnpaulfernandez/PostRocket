@@ -14,5 +14,6 @@ public class GeneratedPost {
 
     private String post;
 
-    private int requestId;
+    @ManyToOne
+    private Request requestId;
 }

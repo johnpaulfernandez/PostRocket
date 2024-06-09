@@ -57,6 +57,7 @@ public class EventsController {
     @GetMapping("/create/events")
     public String showEventsPage(@ModelAttribute UserInput userInput, Model model) {
         model.addAttribute("userInput", userInput);
+        model.addAttribute("user", userServiceImpl.getUser());
         return "events";
     }
 
@@ -100,10 +101,6 @@ public class EventsController {
 
         if (userDetails != null) {
             request.setUser(userService.getUserByEmail(userServiceImpl.getUser().getEmail()));
-//            for (GeneratedPost post : request.getPosts())
-//            {
-//                post.setId(request.getId());
-//            }
         }
 
         map.addAttribute("userInput", userInput);

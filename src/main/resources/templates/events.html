@@ -19,9 +19,23 @@
     Post Rocket
   </div>
   <div class="main">
+    <div class="menu">
+      <div class="menu-item">
+        <span>Home</span>
+      </div>
+      <div class="menu-item">
+        <span>Dashboard</span>
+      </div>
+      <div class="menu-item">
+        <span>Create</span>
+      </div>
+    </div>
   </div>
   <div class="util">
-    <a th:href="@{/signin}" class="signin">Sign in</a>
+    <a th:if="${user == null}" th:href="@{/signin}" class="signin">Sign in</a>
+    <div th:if="${user != null}" class="profile-icon">
+      <a href="#" style="background-image: url(/images/profile-icon.png)" role="button" class="profile-thumbnail"></a>
+    </div>
   </div>
 </nav>
 <div class="foreground">
@@ -33,15 +47,22 @@
   <section id="input-section">
     <form th:action="@{/create/events}" th:object="${userInput}" method="post">
       <p><label for="details">What is the event that you want to create a post about?</label></p>
-      <textarea id="details" name="details" rows="15" cols="150" th:field="*{text}">
+      <textarea id="details" name="text" rows="15" cols="150">
+
         You may include the following details:
 
         - Event Title: This is the main headline of your event
+
         - Event Description: Briefly describe the event, what it's about, and why people should attend.
+
         - Event Date and Time: Include the specific date and time, considering time zones if relevant.
+
         - Location (Physical or Virtual): Specify the physical location or the virtual platform where the event will be held (e.g., Zoom, YouTube Live).
+
         - Event Website/Registration Link: If there's a dedicated event website or a registration link, include it here.
+
         - Target Audience: Who is this event for? Understanding the audience helps tailor the post's tone and content.
+
         - Event Hashtags: Are there any relevant hashtags people might use to find this event?
       </textarea>
       <br>
