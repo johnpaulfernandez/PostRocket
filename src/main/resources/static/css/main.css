@@ -212,12 +212,14 @@ nav div.main {
     line-height: 60px;
     margin-left: 24px;
 
-    span {
+    a {
         cursor: pointer;
         vertical-align: top;
         display: inline-block;
         font-size: 14px;
         font-weight: 400;
+        text-decoration: none;
+        color: var(--text-color);
     }
 
     :hover {

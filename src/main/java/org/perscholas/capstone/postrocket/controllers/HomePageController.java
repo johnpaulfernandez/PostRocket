@@ -35,10 +35,8 @@ public class HomePageController {
     }
 
     @RequestMapping("/home")
-    public String showHomePage(UserDTO user, Model model) {
-        model.addAttribute("user", user.getEmail());
-        userServiceImpl.setUser(user);
-        log.info(user.getEmail());
+    public String showHomePage(Model model) {
+        model.addAttribute("user", userServiceImpl.getUser());
         return "home";
     }
 }

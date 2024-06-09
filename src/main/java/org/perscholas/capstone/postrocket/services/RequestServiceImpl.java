@@ -1,6 +1,9 @@
 package org.perscholas.capstone.postrocket.services;
 
 import jakarta.transaction.Transactional;
+import lombok.Getter;
+import lombok.Setter;
+import org.perscholas.capstone.postrocket.dto.UserDTO;
 import org.perscholas.capstone.postrocket.models.Request;
 import org.perscholas.capstone.postrocket.repositories.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,10 @@ import java.util.List;
 
 @Service
 public class RequestServiceImpl implements RequestService {
+
+    @Getter
+    @Setter
+    private String successUrl;
 
     @Autowired
     private RequestRepository requestRepository;

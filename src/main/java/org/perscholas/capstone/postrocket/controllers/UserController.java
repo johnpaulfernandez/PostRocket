@@ -1,5 +1,6 @@
 package org.perscholas.capstone.postrocket.controllers;
 
+import org.perscholas.capstone.postrocket.services.RequestServiceImpl;
 import org.perscholas.capstone.postrocket.services.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,9 @@ public class UserController {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
+
+    @Autowired
+    private RequestServiceImpl requestServiceImpl;
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
@@ -53,7 +57,8 @@ public class UserController {
     }
 
     @GetMapping("/signin")
-    public String showSignInForm() {
+    public String showSignInForm(ModelMap map) {
+        map.addAttribute("successUrl", requestServiceImpl.getSuccessUrl());
         return "signin";
     }
 

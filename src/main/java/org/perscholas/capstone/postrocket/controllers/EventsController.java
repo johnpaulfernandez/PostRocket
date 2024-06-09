@@ -1,12 +1,14 @@
 package org.perscholas.capstone.postrocket.controllers;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.perscholas.capstone.postrocket.dto.UserDTO;
 import org.perscholas.capstone.postrocket.models.GeneratedPost;
 import org.perscholas.capstone.postrocket.models.Request;
 import org.perscholas.capstone.postrocket.models.User;
 import org.perscholas.capstone.postrocket.models.UserInput;
 import org.perscholas.capstone.postrocket.services.RequestService;
+import org.perscholas.capstone.postrocket.services.RequestServiceImpl;
 import org.perscholas.capstone.postrocket.services.UserService;
 import org.perscholas.capstone.postrocket.services.UserServiceImpl;
 import org.springframework.ai.chat.model.Generation;
@@ -32,6 +34,7 @@ import java.util.Map;
 
 @Controller
 @SessionAttributes({"requestOutput", "userInput"})
+@Slf4j
 public class EventsController {
 
     private final OpenAiChatModel chatModel;
@@ -43,9 +46,8 @@ public class EventsController {
     @Autowired
     private UserServiceImpl userServiceImpl;
 
-
-    record OutputRecord(List<String> output) {
-    }
+    @Autowired
+    private RequestServiceImpl requestServiceImpl;
 
     @Autowired
     public EventsController(OpenAiChatModel chatModel, UserService userService, RequestService requestService) {
@@ -100,9 +102,9 @@ public class EventsController {
 
         try {
             userDetails = userService.loadUserByUsername(userServiceImpl.getUser().getEmail());
+            log.info(userServiceImpl.getUser().getEmail());
         } catch (Exception e) {
-            String successUrl = "/create/events";
-            map.addAttribute("successUrl", successUrl);
+            requestServiceImpl.setSuccessUrl("/create/events");
             return "signin";
         }
 
@@ -111,6 +113,8 @@ public class EventsController {
         }
 
         requestService.saveRequest(request);
+
+        map.addAttribute("user", userServiceImpl.getUser());
 
         return "events";
     }
