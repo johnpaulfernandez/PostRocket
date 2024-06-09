@@ -48,7 +48,9 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/signin")
                         .loginProcessingUrl("/signin")
-                        .successForwardUrl("/home")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .successHandler(new CustomSuccessHandler())
                         .permitAll()
                 )
                 .logout(

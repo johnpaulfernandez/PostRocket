@@ -21,6 +21,9 @@ import java.util.List;
 @SessionAttributes("user")
 public class UserController {
 
+    @Autowired
+    private UserServiceImpl userServiceImpl;
+
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);

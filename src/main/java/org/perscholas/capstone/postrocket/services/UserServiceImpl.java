@@ -57,6 +57,12 @@ public class UserServiceImpl implements UserService {
 
             throw new UsernameNotFoundException("Invalid email or password.");
         }
+
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+        setUser(userDTO);
+
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 

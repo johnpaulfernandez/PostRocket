@@ -29,8 +29,8 @@ public class HomePageController {
     private UserServiceImpl userServiceImpl;
 
     @GetMapping("/")
-    private String redirectToHome()
-    {
+    private String redirectToHome() {
+
         return "redirect:/home";
     }
 
