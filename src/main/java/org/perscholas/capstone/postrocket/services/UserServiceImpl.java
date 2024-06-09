@@ -35,6 +35,16 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
+    private UserDTO userDTO;
+
+    public void setUser(UserDTO userDTO) {
+        this.userDTO = userDTO;
+    }
+
+    public UserDTO getUser() {
+        return userDTO;
+    }
+
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -84,6 +94,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(int id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        User user = userRepository.findUserByEmail(email);
+        if (user == null) {
+            log.warn("Invalid email or password {}", email);
+
+            throw new UsernameNotFoundException("Invalid email or password.");
+        }
+        return user;
     }
 
     @Override

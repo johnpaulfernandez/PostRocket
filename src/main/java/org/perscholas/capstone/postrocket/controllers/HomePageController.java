@@ -1,6 +1,7 @@
 package org.perscholas.capstone.postrocket.controllers;
 
 import lombok.extern.slf4j.Slf4j;
+import org.perscholas.capstone.postrocket.dto.UserDTO;
 import org.perscholas.capstone.postrocket.models.User;
 import org.perscholas.capstone.postrocket.services.UserService;
 import org.perscholas.capstone.postrocket.services.UserServiceImpl;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@SessionAttributes("user")
 @Slf4j
 public class HomePageController {
 
@@ -25,6 +25,9 @@ public class HomePageController {
         this.userDetailsService = userDetailsService;
     }
 
+    @Autowired
+    private UserServiceImpl userServiceImpl;
+
     @GetMapping("/")
     private String redirectToHome()
     {
@@ -32,13 +35,10 @@ public class HomePageController {
     }
 
     @RequestMapping("/home")
-    public String showHomePage(User user, ModelMap map) {
-        if (map.getAttribute("user") == null) {
-            map.addAttribute("user", new User());
-        } else {
-            userDetailsService.loadUserByUsername(user.getEmail());
-            log.info(user.getEmail());
-        }
+    public String showHomePage(UserDTO user, Model model) {
+        model.addAttribute("user", user.getEmail());
+        userServiceImpl.setUser(user);
+        log.info(user.getEmail());
         return "home";
     }
 }

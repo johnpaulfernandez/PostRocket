@@ -8,6 +8,7 @@ import org.perscholas.capstone.postrocket.models.User;
 import org.perscholas.capstone.postrocket.models.UserInput;
 import org.perscholas.capstone.postrocket.services.RequestService;
 import org.perscholas.capstone.postrocket.services.UserService;
+import org.perscholas.capstone.postrocket.services.UserServiceImpl;
 import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
@@ -39,6 +40,8 @@ public class EventsController {
 
     private final RequestService requestService;
 
+    @Autowired
+    private UserServiceImpl userServiceImpl;
 
 
     record OutputRecord(List<String> output) {
@@ -54,7 +57,6 @@ public class EventsController {
     @GetMapping("/create/events")
     public String showEventsPage(@ModelAttribute UserInput userInput, Model model) {
         model.addAttribute("userInput", userInput);
-
         return "events";
     }
 
@@ -86,20 +88,27 @@ public class EventsController {
         return "events";
     }
 
+    /*
+    Get user from session attribute
+     */
     @PostMapping("/create/events/save")
-    public void saveThread(ModelMap map)
+    public String saveThread(@ModelAttribute UserInput userInput, ModelMap map)
     {
         Request request = (Request) map.getAttribute("requestOutput");
 
-        UserDetails user = userService.loadUserByUsername(request.getUser().getEmail());
+        UserDetails userDetails = userService.loadUserByUsername(userServiceImpl.getUser().getEmail());
 
-        if (user != null) {
-            for (GeneratedPost post : request.getPosts())
-            {
-                post.setId(request.getId());
-            }
+        if (userDetails != null) {
+            request.setUser(userService.getUserByEmail(userServiceImpl.getUser().getEmail()));
+//            for (GeneratedPost post : request.getPosts())
+//            {
+//                post.setId(request.getId());
+//            }
         }
 
-        requestService.saveRequest((Request) map.getAttribute("requestOutput"));
+        map.addAttribute("userInput", userInput);
+        requestService.saveRequest(request);
+
+        return "events";
     }
 }

@@ -2,6 +2,7 @@ package org.perscholas.capstone.postrocket.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,6 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "user")
+@ToString
 public class User {
 
     @Id
@@ -24,6 +26,7 @@ public class User {
     private String birthYear;
 
     @OneToMany(mappedBy = "name", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Request> requests = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

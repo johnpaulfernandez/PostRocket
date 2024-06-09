@@ -18,12 +18,22 @@ import java.util.List;
 
 @Controller
 @Slf4j
+@SessionAttributes("user")
 public class UserController {
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+    }
+
+    /*
+    When the controller is accessed for the first time, Spring instantiates an instance
+    and places the session attribute 'user' in the Model.
+     */
+    @ModelAttribute("user")
+    public UserDTO setUpUserForm() {
+        return new UserDTO();
     }
 
     private UserServiceImpl userDetailsService;
@@ -34,40 +44,40 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("userDto", new UserDTO());
+    public String showRegistrationForm(ModelMap map) {
+        map.addAttribute("user", new UserDTO());
         return "register";
     }
 
     @GetMapping("/signin")
-    public String showSignInForm(@ModelAttribute User user, ModelMap map) {
-        map.addAttribute("user", user);
+    public String showSignInForm() {
         return "signin";
     }
 
     @PostMapping("/registration-process")
-    public String registrationProcess(@Valid @ModelAttribute ("userDto") UserDTO userDTO, BindingResult bindingResult)
+    public String registrationProcess(@Valid @ModelAttribute ("user") UserDTO user, BindingResult bindingResult, ModelMap map)
     {
         if(bindingResult.hasErrors())
         {
             log.warn("Failed registration attempt!");
             return "register";
         }
-        userDetailsService.create(userDTO);
+        userDetailsService.create(user);
+
         return "redirect:/signin";
     }
 
     @GetMapping("/admin/all-users")
     public String getAllUsers(Model model) {
         List<User> users = userDetailsService.getAllUsers();
-        model.addAttribute("users", users);
+//        model.addAttribute("users", users);
         return "all-users";
     }
 
     @GetMapping("/admin/edit/{id}")
     public String showEditForm(@PathVariable("id") int id, Model model) {
         User user = userDetailsService.getUserById(id);
-        model.addAttribute("user", user);
+//        model.addAttribute("user", user);
         return "edit-user";
     }
 
