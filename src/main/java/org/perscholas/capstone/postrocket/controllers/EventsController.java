@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@SessionAttributes("requestOutput")
+@SessionAttributes({"requestOutput", "userInput"})
 public class EventsController {
 
     private final OpenAiChatModel chatModel;
@@ -55,14 +55,14 @@ public class EventsController {
     }
 
     @GetMapping("/create/events")
-    public String showEventsPage(@ModelAttribute UserInput userInput, Model model) {
+    public String showEventsPage(UserInput userInput, Model model) {
         model.addAttribute("userInput", userInput);
         model.addAttribute("user", userServiceImpl.getUser());
         return "events";
     }
 
     @PostMapping("/create/events")
-    public String generateThread(@ModelAttribute UserInput userInput, ModelMap map) {
+    public String generateThread(UserInput userInput, ModelMap map) {
         BeanOutputConverter<Request> outputConverter = new BeanOutputConverter<>(Request.class);
 
         String format = outputConverter.getFormat();
@@ -93,7 +93,7 @@ public class EventsController {
     Get user from session attribute
      */
     @PostMapping("/create/events/save")
-    public String saveThread(@ModelAttribute UserInput userInput, ModelMap map)
+    public String saveThread(ModelMap map)
     {
         UserDetails userDetails;
         Request request = (Request) map.getAttribute("requestOutput");
@@ -101,6 +101,8 @@ public class EventsController {
         try {
             userDetails = userService.loadUserByUsername(userServiceImpl.getUser().getEmail());
         } catch (Exception e) {
+            String successUrl = "/create/events";
+            map.addAttribute("successUrl", successUrl);
             return "signin";
         }
 
@@ -108,7 +110,6 @@ public class EventsController {
             request.setUser(userService.getUserByEmail(userServiceImpl.getUser().getEmail()));
         }
 
-        map.addAttribute("userInput", userInput);
         requestService.saveRequest(request);
 
         return "events";

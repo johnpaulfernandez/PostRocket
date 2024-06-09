@@ -19,7 +19,7 @@
         <form method="post" th:action="@{/signin}" th:object="${user}" >
           <input type="text" id="email" name="email" placeholder="Email" required="" autofocus=""/>
           <input type="text" id="password" name="password" placeholder="Password" required="" autofocus=""/>
-          <input type="hidden" name="successUrl" value="/create/events">
+          <input type="hidden" name="successUrl" th:value="${successUrl}">
           <button type="submit" class="top-margin accent">Login</button>
         </form>
       </div>
