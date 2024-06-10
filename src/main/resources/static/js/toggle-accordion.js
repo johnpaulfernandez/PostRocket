@@ -7,19 +7,22 @@ function getSiblingsByClass(element, className) {
     return allSiblings.filter(sibling => sibling !== element);
 }
 
-const accordion = document.querySelectorAll(".thread");
+const accordion = document.querySelectorAll(".thread-header");
 
 accordion.forEach(item => {
     item.addEventListener("click", () => {
         item.classList.toggle("active");
 
-        let siblings = getSiblingsByClass(item.querySelector(".thread-header"), "panel-item");
+        let siblings = getSiblingsByClass(item, "panel-item");
 
         siblings.forEach(post => {
-            if (post.style.display === "block") {
+            if (post.style.display === "flex") {
                 post.style.display = "none";
             } else {
-                post.style.display = "block";
+                post.style.display = "flex";
+                post.style.flexDirection = "row";
+                post.style.justifyContent = "space-between";
+                post.style.paddingRight = "1rem";
             }
         })
     })
