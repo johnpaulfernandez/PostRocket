@@ -2,15 +2,14 @@ package org.perscholas.capstone.postrocket.controllers;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.perscholas.capstone.postrocket.dto.UserDTO;
 import org.perscholas.capstone.postrocket.models.GeneratedPost;
 import org.perscholas.capstone.postrocket.models.Request;
 import org.perscholas.capstone.postrocket.models.User;
 import org.perscholas.capstone.postrocket.models.UserInput;
-import org.perscholas.capstone.postrocket.services.RequestService;
-import org.perscholas.capstone.postrocket.services.RequestServiceImpl;
-import org.perscholas.capstone.postrocket.services.UserService;
-import org.perscholas.capstone.postrocket.services.UserServiceImpl;
+import org.perscholas.capstone.postrocket.services.*;
 import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
@@ -28,6 +27,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +46,8 @@ public class EventsController {
 
     private final RequestService requestService;
 
+    private final GeneratedPostService postService;
+
     @Autowired
     private UserServiceImpl userServiceImpl;
 
@@ -53,10 +55,11 @@ public class EventsController {
     private RequestServiceImpl requestServiceImpl;
 
     @Autowired
-    public EventsController(OpenAiChatModel chatModel, UserService userService, RequestService requestService) {
+    public EventsController(OpenAiChatModel chatModel, UserService userService, RequestService requestService, GeneratedPostService postService) {
         this.chatModel = chatModel;
         this.userService = userService;
         this.requestService = requestService;
+        this.postService = postService;
     }
 
     @GetMapping("/create/events")
@@ -85,7 +88,9 @@ public class EventsController {
         Prompt prompt = new Prompt(promptTemplate.createMessage());
 
         Generation generation = chatModel.call(prompt).getResult();
-        Request requestOutput = outputConverter.convert(generation.getOutput().getContent());
+        Request requestOutput = new Request();
+
+        requestOutput = outputConverter.convert(generation.getOutput().getContent());
 
 //        Request requestOutput = null;
 
@@ -100,15 +105,24 @@ public class EventsController {
     Get user from session attribute
      */
     @PostMapping("/create/events/save")
-    public String saveThread(ModelMap map)
+    public String saveThread(UserInput userInput, ModelMap map)
     {
         UserDetails userDetails;
-        Request request = (Request) map.getAttribute("requestOutput");
+
+        Request request = new Request();
+
+        request.setName(userInput.getTitle());
+
+//        ModelMapper modelMapper = new ModelMapper();
+//        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+//        User user = modelMapper.map(userServiceImpl.getUser(), User.class);
+
 
         try {
             userDetails = userService.loadUserByUsername(userServiceImpl.getUser().getEmail());
             log.info(userServiceImpl.getUser().getEmail());
         } catch (Exception e) {
+//            request.setUser(user);
 
             requestServiceImpl.setSuccessUrl(SUCCESS_URL);
             map.addAttribute("successUrl", SUCCESS_URL);
@@ -120,6 +134,18 @@ public class EventsController {
         }
 
         requestService.saveRequest(request);
+
+        Request requestAttribute = (Request) map.getAttribute("requestOutput");
+        List<GeneratedPost> posts;
+
+        if (requestAttribute != null) {
+           posts = requestAttribute.getPosts();
+
+            for (GeneratedPost post : posts) {
+                post.setRequest(request);
+                postService.saveGeneratedPost(post);
+            }
+        }
 
         map.addAttribute("user", userServiceImpl.getUser());
 

@@ -1,6 +1,8 @@
 package org.perscholas.capstone.postrocket.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,8 +16,19 @@ import lombok.ToString;
 public class GeneratedPost {
 
     @Id
+    @Column(unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String post;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "request_id")
+    @JsonProperty
+    private Request request;
+
+    public GeneratedPost(int id, String post) {
+        this.id = id;
+        this.post = post;
+    }
 }
