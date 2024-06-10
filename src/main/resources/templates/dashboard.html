@@ -63,8 +63,16 @@
             <i class="fa-solid fa-chevron-down"></i>
           </div>
           <div class="panel-item" style="display: none;" th:each = "post : ${request.getPosts()}">
-            <div th:text = "${post.getPost()}"></div>
-            <i class="fa-solid fa-ellipsis"></i>
+            <span th:text = "${post.getPost()}"></span>
+            <div class="dropdown-trigger">
+              <i class="fa-solid fa-ellipsis"></i>
+              <div class="dropdown-menu">
+                <ul class="dropdown-items">
+                  <li>Edit</li>
+                  <li>Delete</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -76,6 +84,7 @@
 <footer>Created by JP Fernandez</footer>
 
 <script th:src="@{/js/toggle-accordion.js}"></script>
+<script th:src="@{/js/toggle-dropdown-menu.js}"></script>
 
 </body>
 </html>
