@@ -24,7 +24,7 @@
         <a th:href="@{/home}" class="menu-link">Home</a>
       </div>
       <div class="menu-item">
-        <a th:href="@{/dashboard}" class="menu-link">Dashboard</a>
+        <a th:href="@{/dashboard}" class="menu-link active">Dashboard</a>
       </div>
       <div class="menu-item">
         <a th:href="@{/create/events}" class="menu-link">Create</a>
@@ -34,7 +34,7 @@
   <div class="util">
     <a th:if="${user == null}" th:href="@{/signin}" class="signin">Sign in</a>
     <div th:if="${user != null}" class="profile-icon">
-      <a href="#" style="background-image: url(/images/profile-icon.png)" role="button" class="profile-thumbnail"></a>
+      <img src="/images/profile-icon.png" alt="Profile icon">
     </div>
   </div>
 </nav>
@@ -46,8 +46,9 @@
             <h2 th:text="|Hi, John|"></h2>
             <p>Find and edit your saved posts here.</p>
       </div>
-      <div class="image">
+      <div class="home-banner-right-section">
         <img src="/images/paper-plane.svg" alt="Banner image">
+        <button class="accent" type="button" th:onclick="|window.location.href='/home#use-cases'|" style="margin-left: 40px;">Create more</button>
       </div>
     </div>
   </section>
@@ -63,6 +64,8 @@
   </section>
 
 </div>
+<section style="padding: 300px;"></section>
+<footer>Created by JP Fernandez</footer>
 
 <script>
   function getSiblingsByClass(element, className) {

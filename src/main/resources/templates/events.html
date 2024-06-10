@@ -27,14 +27,14 @@
         <a th:href="@{/dashboard}" class="menu-link">Dashboard</a>
       </div>
       <div class="menu-item">
-        <a th:href="@{/create/events}" class="menu-link">Create</a>
+        <a th:href="@{/create/events}" class="menu-link active">Create</a>
       </div>
     </div>
   </div>
   <div class="util">
     <a th:if="${user == null}" th:href="@{/signin}" class="signin">Sign in</a>
     <div th:if="${user != null}" class="profile-icon">
-      <a href="#" style="background-image: url(/images/profile-icon.png)" role="button" class="profile-thumbnail"></a>
+      <img src="/images/profile-icon.png" alt="Profile icon">
     </div>
   </div>
 </nav>
@@ -110,5 +110,7 @@
   <script th:src="@{/js/validate-input.js}"></script>
 
 </div>
+<section style="padding: 300px;"></section>
+<footer>Created by JP Fernandez</footer>
 </body>
 </html>

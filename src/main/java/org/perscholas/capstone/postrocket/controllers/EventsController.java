@@ -61,6 +61,7 @@ public class EventsController {
 
     @GetMapping("/create/events")
     public String showEventsPage(UserInput userInput, Model model) {
+        model.addAttribute("user", userServiceImpl.getUser());
         model.addAttribute("userInput", userInput);
         model.addAttribute("user", userServiceImpl.getUser());
         return "events";
@@ -88,6 +89,7 @@ public class EventsController {
 
 //        Request requestOutput = null;
 
+        map.addAttribute("user", userServiceImpl.getUser());
         map.addAttribute("userInput", userInput);
         map.addAttribute("requestOutput", requestOutput);
 

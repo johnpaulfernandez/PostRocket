@@ -19,11 +19,22 @@
     Post Rocket
   </div>
   <div class="main">
+    <div class="menu">
+      <div th:if="${user != null}" class="menu-item">
+        <a th:href="@{/home}" class="menu-link active">Home</a>
+      </div>
+      <div th:if="${user != null}" class="menu-item">
+        <a th:href="@{/dashboard}" class="menu-link">Dashboard</a>
+      </div>
+      <div th:if="${user != null}" class="menu-item">
+        <a th:href="@{/create/events}" class="menu-link">Create</a>
+      </div>
+    </div>
   </div>
   <div class="util">
     <a th:if="${user == null}" th:href="@{/signin}" class="signin">Sign in</a>
     <div th:if="${user != null}" class="profile-icon">
-      <img src="/images/profile-icon.png" alt="">
+      <img src="/images/profile-icon.png" alt="Profile icon">
     </div>
   </div>
 </nav>
@@ -167,5 +178,7 @@
       </div>
     </div>
 </section>
+<section style="padding: 150px;"></section>
+<footer>Created by JP Fernandez</footer>
 </body>
 </html>

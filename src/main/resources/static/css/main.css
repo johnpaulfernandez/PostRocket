@@ -26,7 +26,7 @@ input, textarea, button {
 }
 
 section#hero {
-    padding: 26px 56px 90px 134px;
+    padding: 26px 56px 50px 134px;
     align-items: flex-start;
     display: flex;
     flex-direction: row;
@@ -152,7 +152,7 @@ button[type="submit"] {
     color: var(--base-color);
 }
 
-nav {
+nav, footer {
     --global-nav-height: 64px;
     height: var(--global-nav-height);
     max-height: var(--global-nav-height);
@@ -166,6 +166,16 @@ nav {
     padding: 0 8px;
     width: 100%;
     z-index: 20100;
+}
+
+nav .menu-item a.active {
+    font-weight: 600;
+}
+
+footer {
+    border-top: 1px solid rgba(0, 0, 0, .08);
+    justify-content: flex-end;
+    padding-right: 40px;
 }
 .branding {
     flex: 0 0 auto;
@@ -278,6 +288,7 @@ section#use-cases {
     display: flex;
     flex-direction: column;
     padding: 0 0 88px;
+    margin-top: 40px;
 }
 
 section#use-cases h2 {
