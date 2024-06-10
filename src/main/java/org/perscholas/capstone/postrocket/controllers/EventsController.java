@@ -136,14 +136,15 @@ public class EventsController {
         requestService.saveRequest(request);
 
         Request requestAttribute = (Request) map.getAttribute("requestOutput");
-        List<GeneratedPost> posts;
 
         if (requestAttribute != null) {
-           posts = requestAttribute.getPosts();
 
-            for (GeneratedPost post : posts) {
-                post.setRequest(request);
-                postService.saveGeneratedPost(post);
+            for (GeneratedPost post : requestAttribute.getPosts()) {
+                GeneratedPost newPost = new GeneratedPost();
+                newPost.setRequest(request);
+                newPost.setPost(post.getPost());
+
+                postService.saveGeneratedPost(newPost);
             }
         }
 
