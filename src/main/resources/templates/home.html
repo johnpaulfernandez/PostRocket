@@ -14,7 +14,7 @@
 <nav>
   <div class="branding">
     <div class="header-icon">
-      <img src="/images/blog-icon.png" alt="">
+      <img src="/images/rocket-icon.png" alt="">
     </div>
     Post Rocket
   </div>
@@ -23,7 +23,7 @@
   <div class="util">
     <a th:if="${user == null}" th:href="@{/signin}" class="signin">Sign in</a>
     <div th:if="${user != null}" class="profile-icon">
-      <a href="#" style="background-image: url(/images/profile-icon.png)" role="button" class="profile-thumbnail"></a>
+      <img src="/images/profile-icon.png" alt="">
     </div>
   </div>
 </nav>
@@ -38,7 +38,7 @@
     </div>
   </div>
   <div class="heading-section-right">
-    <img src="" alt="">
+    <img src="/images/idea-launch.svg" alt="Banner image">
   </div>
 </section>
 

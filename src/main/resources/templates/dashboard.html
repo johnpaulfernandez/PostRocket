@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}" />
+  <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav>
+  <div class="branding">
+    <div class="header-icon">
+      <img src="/images/rocket-icon.png" alt="">
+    </div>
+    Post Rocket
+  </div>
+  <div class="main">
+    <div class="menu">
+      <div class="menu-item">
+        <a th:href="@{/home}" class="menu-link">Home</a>
+      </div>
+      <div class="menu-item">
+        <a th:href="@{/dashboard}" class="menu-link">Dashboard</a>
+      </div>
+      <div class="menu-item">
+        <a th:href="@{/create/events}" class="menu-link">Create</a>
+      </div>
+    </div>
+  </div>
+  <div class="util">
+    <a th:if="${user == null}" th:href="@{/signin}" class="signin">Sign in</a>
+    <div th:if="${user != null}" class="profile-icon">
+      <a href="#" style="background-image: url(/images/profile-icon.png)" role="button" class="profile-thumbnail"></a>
+    </div>
+  </div>
+</nav>
+<div class="foreground">
+  <section id="home-banner" style="background-image: url(/images/dashboard-background.jpeg); background-size: cover; background-position: center" >
+    <div class="home-banner-contents">
+      <div class="title">
+<!--        <h2 th:text="|Hi, ${user.getFirstName()}|"></h2>-->
+            <h2 th:text="|Hi, John|"></h2>
+            <p>Find and edit your posts here</p>
+      </div>
+      <div class="image">
+        <img src="/images/paper-plane.svg" alt="Banner image">
+      </div>
+    </div>
+  </section>
+
+  <section id="table">
+    <div class="row-group" th:each = "request : ${requests}">
+      <h3 th:text = "${request.getName()}"></h3>
+      <div class="item" th:each = "post : ${request.getPosts()}">
+        <span th:text = "${post}"></span>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
