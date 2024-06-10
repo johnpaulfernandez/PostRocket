@@ -115,3 +115,8 @@ textarea#details, textarea#text {
     height: 1px;
     background: var(--gray-300);
 }
+
+.action-container #title {
+    margin-right: 2rem;
+    margin-top: 0.1rem;
+}
