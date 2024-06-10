@@ -44,7 +44,7 @@
       <div class="title">
 <!--        <h2 th:text="|Hi, ${user.getFirstName()}|"></h2>-->
             <h2 th:text="|Hi, John|"></h2>
-            <p>Find and edit your posts here</p>
+            <p>Find and edit your saved posts here.</p>
       </div>
       <div class="image">
         <img src="/images/paper-plane.svg" alt="Banner image">
@@ -53,14 +53,45 @@
   </section>
 
   <section id="table">
-    <div class="row-group" th:each = "request : ${requests}">
-      <h3 th:text = "${request.getName()}"></h3>
-      <div class="item" th:each = "post : ${request.getPosts()}">
-        <span th:text = "${post}"></span>
+    <div class="row-group">
+      <div class = "thread" th:each = "request : ${requests}">
+        <button class="accordion" th:text = "${request.getName()}"></button>
+        <div class="panel-item" style="display: none;" th:each = "post : ${request.getPosts()}" th:text = "${post.getPost()}">
+        </div>
       </div>
     </div>
   </section>
 
 </div>
+
+<script>
+  function getSiblingsByClass(element, className) {
+    const parent = element.parentElement;
+    if (!parent) return [];
+
+    const siblings = parent.getElementsByClassName(className);
+    const allSiblings = Array.from(siblings);
+    return allSiblings.filter(sibling => sibling !== element);
+  }
+
+  const accordion = document.querySelectorAll(".accordion");
+
+  accordion.forEach(item => {
+    item.addEventListener("click", () => {
+      item.classList.toggle("active");
+
+      let siblings = getSiblingsByClass(item, "panel-item");
+
+      siblings.forEach(post => {
+        if (post.style.display === "block") {
+          post.style.display = "none";
+        } else {
+          post.style.display = "block";
+        }
+      })
+    })
+  });
+
+</script>
 </body>
 </html>

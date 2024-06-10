@@ -26,8 +26,20 @@ h2 {
     font-weight: 600;
 }
 
-label[for="details"], label[for="text"] {
+h3 {
     font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.heading {
+    display: flex;
+    justify-content: space-between;
+}
+
+form {
+    margin-top: 10px;
+    padding-bottom: 32px;
 }
 
 textarea#details, textarea#text {

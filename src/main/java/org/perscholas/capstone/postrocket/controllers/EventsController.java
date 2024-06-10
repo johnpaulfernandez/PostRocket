@@ -32,10 +32,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+
 @Controller
 @SessionAttributes({"requestOutput", "userInput"})
 @Slf4j
 public class EventsController {
+
+    public static final String SUCCESS_URL = "/create/events";
 
     private final OpenAiChatModel chatModel;
 
@@ -104,7 +107,9 @@ public class EventsController {
             userDetails = userService.loadUserByUsername(userServiceImpl.getUser().getEmail());
             log.info(userServiceImpl.getUser().getEmail());
         } catch (Exception e) {
-            requestServiceImpl.setSuccessUrl("/create/events");
+
+            requestServiceImpl.setSuccessUrl(SUCCESS_URL);
+            map.addAttribute("successUrl", SUCCESS_URL);
             return "signin";
         }
 

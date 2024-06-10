@@ -18,8 +18,4 @@ public class GeneratedPost {
     private int id;
 
     private String post;
-
-    @ManyToOne
-    @ToString.Exclude
-    private Request request;
 }

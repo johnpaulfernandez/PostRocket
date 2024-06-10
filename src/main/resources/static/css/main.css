@@ -129,7 +129,9 @@ button.primary:hover {
 .top-margin {margin-top: 50px;
 }
 
-form {margin-top: 32px;padding-bottom: 32px;
+form {
+    margin-top: 32px;
+    padding-bottom: 32px;
 }
 
 input {width: 100%;height: 100%;padding: 8px;margin-bottom: 20px;box-sizing: border-box;
@@ -329,6 +331,7 @@ section#use-cases h2 {
 .drop-zone:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
 }
+
 article {
     height: 100%;
     border-radius: 4px;

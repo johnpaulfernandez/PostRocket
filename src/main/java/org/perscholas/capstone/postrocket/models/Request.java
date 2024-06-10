@@ -28,6 +28,9 @@ public class Request {
     @ToString.Exclude
     private User user;
 
-    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "request_posts",
+            joinColumns = @JoinColumn(name = "request_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id"))
     private List<GeneratedPost> posts;
 }
