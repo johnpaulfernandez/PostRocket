@@ -140,7 +140,7 @@ input {width: 100%;height: 100%;padding: 8px;margin-bottom: 20px;box-sizing: bor
 #form {float: right;
 }
 
-button[type="submit"] {
+button[type="submit"]:not(.small-icon) {
     border: none;
     padding: 10px 20px;
     text-align: center;

@@ -13,11 +13,16 @@ function findParentByClass(element, className) {
 }
 
 trigger.forEach(ellipsis => {
-    ellipsis.addEventListener('click', (threeDots)=> {
+    ellipsis.addEventListener('click', (dropdown)=> {
+
+        dropdown.preventDefault();
+
         let options = ellipsis.querySelector('.dropdown-menu');
         options.classList.toggle('show');
 
         parentElement.addEventListener("click", (clicked) => {
+
+            clicked.preventDefault();
 
             // Check if clicked element is not the target element and not a descendant of it
             if (!clicked.target.isEqualNode(ellipsis) && !ellipsis.contains(clicked.target)) {
