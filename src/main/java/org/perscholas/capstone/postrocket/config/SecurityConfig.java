@@ -40,9 +40,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         (auth) -> auth
                                 .requestMatchers("/", "/home", "/signin*",
-                                        "/css/*", "/js/*", "/images/*","/register", "/registration-process", "/create/events", "/create/events/save", "/dashboard").permitAll()
+                                        "/css/*", "/js/*", "/images/*","/register", "/registration-process", "/create/events", "/create/events/save", "/dashboard", "/update/events/*").permitAll()
                                 .requestMatchers("/home").hasAnyRole("USER", "ADMIN")
-//                                .requestMatchers("/dashboard").authenticated()
+//                                .requestMatchers("/dashboard", "/update/events/*).authenticated()
                                 .anyRequest().authenticated()
                 )
 

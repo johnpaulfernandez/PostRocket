@@ -51,13 +51,14 @@ editButtons.forEach(item => {
             });
 
             save.addEventListener("click", (saveButton) => {
-                saveButton.preventDefault();
+                // saveButton.preventDefault();
                 save.classList.remove("show");
                 xmark.classList.remove("show");
                 textArea.setAttribute("disabled", true);
                 textArea.style.fontWeight = "400";
                 parentElement.style.border = "none";
                 textArea.blur();
+                parentElement.submit();
             });
 
         } else {

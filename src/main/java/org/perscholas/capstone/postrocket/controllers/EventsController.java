@@ -22,10 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -101,9 +98,6 @@ public class EventsController {
         return "events";
     }
 
-    /*
-    Get user from session attribute
-     */
     @PostMapping("/create/events/save")
     public String saveThread(UserInput userInput, ModelMap map)
     {
@@ -151,5 +145,12 @@ public class EventsController {
         map.addAttribute("user", userServiceImpl.getUser());
 
         return "events";
+    }
+
+    @PostMapping("/update/events/{postId}")
+    public void updatePost(@PathVariable("postId") int postId)
+    {
+        GeneratedPost post = postService.findGeneratedPostById(postId);
+        postService.saveGeneratedPost(post);
     }
 }
