@@ -155,6 +155,11 @@ section#table {
     transition: transform .13s ease-in-out, opacity .13s ease-in-out, visibility 0ms linear .13s;
 }
 
+.small-icon {
+    background-color: transparent;
+    border: none;
+}
+
 .dropdown-menu.show {
     display: inline-flex;
 }
@@ -197,7 +202,17 @@ section#table {
     }
 }
 
-.dropdown-items li:hover {
+.dropdown-items li:hover, .small-icon:hover {
     background-color: #eaeaea;
     box-shadow: none;
 }
+
+textarea, textarea:hover, .small-icon:hover {
+    border: none !important;
+    outline: none !important;
+    background-color: transparent !important;
+    font: inherit !important;
+    box-shadow: none !important;
+    resize: none;
+}
+

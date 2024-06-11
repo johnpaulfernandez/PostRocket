@@ -62,18 +62,20 @@
             <div class="accordion" th:text = "${request.getName()}"></div>
             <i class="fa-solid fa-chevron-down"></i>
           </div>
+
           <div class="panel-item" style="display: none;" th:each = "post : ${request.getPosts()}">
-            <span th:text = "${post.getPost()}"></span>
+            <textarea disabled rows="1" cols="200" th:text = "${post.getPost()}"></textarea>
             <div class="dropdown-trigger">
-              <i class="fa-solid fa-ellipsis"></i>
+              <button class="small-icon"><i class="fa-solid fa-ellipsis"></i></button>
               <div class="dropdown-menu">
                 <ul class="dropdown-items">
-                  <li>Edit</li>
-                  <li>Delete</li>
+                  <li id="edit-action">Edit</li>
+                  <li id="delete-action">Delete</li>
                 </ul>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -85,6 +87,7 @@
 
 <script th:src="@{/js/toggle-accordion.js}"></script>
 <script th:src="@{/js/toggle-dropdown-menu.js}"></script>
+<script th:src="@{/js/edit-post.js}"></script>
 
 </body>
 </html>
