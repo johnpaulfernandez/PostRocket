@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface GeneratedPostRepository extends JpaRepository<GeneratedPost, Integer> {
-    public GeneratedPost findGeneratedPostById(int id);
+public interface GeneratedPostRepository extends JpaRepository<GeneratedPost, Long> {
+    public GeneratedPost findGeneratedPostById(long id);
 }

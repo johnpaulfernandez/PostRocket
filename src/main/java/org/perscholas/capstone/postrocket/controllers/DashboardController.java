@@ -49,7 +49,7 @@ public class DashboardController {
     }
 
     @PostMapping("/dashboard/events/{postId}")
-    public String updatePost(@PathVariable("postId") int postId, @ModelAttribute GeneratedPost post, ModelMap map, @RequestParam("_method") String method)
+    public String updatePost(@PathVariable("postId") long postId, @ModelAttribute GeneratedPost post, ModelMap map, @RequestParam("_method") String method)
     {
         if (method.equals("EDIT")) {
             try {
@@ -79,11 +79,9 @@ public class DashboardController {
     }
 
     private String getDashboardData(ModelMap map) {
-        UserDTO userDTO = userServiceImpl.getUser();
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        User user = modelMapper.map(userDTO, User.class);
+        User user = userServiceImpl.getUser();
         map.addAttribute("user", user);
+        map.addAttribute("role", user.getRoles());
 
         List<Request> requests = requestService.getRequestsByUserId(userServiceImpl.getUserByEmail(user.getEmail()).getId());
         map.addAttribute("requests", requests);

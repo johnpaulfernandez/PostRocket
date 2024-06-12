@@ -1,5 +1,7 @@
 package org.perscholas.capstone.postrocket.services;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.perscholas.capstone.postrocket.dto.UserDTO;
 import org.perscholas.capstone.postrocket.models.Role;
 import org.perscholas.capstone.postrocket.models.User;
@@ -38,15 +40,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
-    private UserDTO userDTO;
-
-    public void setUser(UserDTO userDTO) {
-        this.userDTO = userDTO;
-    }
-
-    public UserDTO getUser() {
-        return userDTO;
-    }
+    @Getter
+    @Setter
+    private User user;
 
     @Override
     @Transactional
@@ -57,11 +53,7 @@ public class UserServiceImpl implements UserService {
 
             throw new UsernameNotFoundException("Invalid email or password.");
         }
-
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-        setUser(userDTO);
+        setUser(user);
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
@@ -83,10 +75,10 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(encoder.encode(user.getPassword()));
 
-        Role userRole = roleService.findRoleByRoleName("ROLE_USER");
+        Role userRole = roleService.findRoleByRoleName("Free");
         if (userRole == null) {
             Role role = new Role();
-            role.setName("ROLE_USER");
+            role.setName("Free");
             userRole = roleService.saveRole(role);
         }
         user.setRoles(Arrays.asList(userRole));
@@ -101,7 +93,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(long id) {
         return userRepository.findById(id).orElse(null);
     }
 
@@ -118,7 +110,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void deleteUser(int id) {
+    public void deleteUser(long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
             userRepository.delete(user);

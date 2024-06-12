@@ -3,11 +3,16 @@ package org.perscholas.capstone.postrocket.services;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.Setter;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.perscholas.capstone.postrocket.dto.UserDTO;
 import org.perscholas.capstone.postrocket.models.Request;
+import org.perscholas.capstone.postrocket.models.Role;
+import org.perscholas.capstone.postrocket.models.User;
 import org.perscholas.capstone.postrocket.repositories.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 import java.util.List;
 
@@ -34,13 +39,13 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public Request getRequestById(int id) {
+    public Request getRequestById(long id) {
         return requestRepository.findById(id).orElse(null);
     }
 
     @Override
     @Transactional
-    public void deleteRequest(int id) {
+    public void deleteRequest(long id) {
         Request request = requestRepository.findById(id).orElse(null);
         if (request != null) {
             requestRepository.delete(request);
@@ -48,12 +53,12 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public Request findRequestById(int id) {
+    public Request findRequestById(long id) {
         return requestRepository.findRequestById(id);
     }
 
     @Override
-    public List<Request> getRequestsByUserId(int userId) {
+    public List<Request> getRequestsByUserId(long userId) {
         return requestRepository.findRequestsByUserId(userId);
     }
 }

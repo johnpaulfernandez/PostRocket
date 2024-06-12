@@ -41,7 +41,7 @@ public class SecurityConfig {
                         (auth) -> auth
                                 .requestMatchers("/", "/home", "/signin*",
                                         "/css/*", "/js/*", "/images/*","/register", "/registration-process", "/create/events", "/create/events/save", "/dashboard", "/update/events/*").permitAll()
-                                .requestMatchers("/home").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/home").hasAnyRole("FREE", "ADMIN")
 //                                .requestMatchers("/dashboard", "/update/events/*).authenticated()
                                 .anyRequest().authenticated()
                 )

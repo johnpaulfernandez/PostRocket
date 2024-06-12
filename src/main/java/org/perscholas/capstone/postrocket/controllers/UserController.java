@@ -20,6 +20,13 @@ import java.util.List;
 @Controller
 @Slf4j
 @SessionAttributes("user")
+/*
+This controller is mapped to “/sign-up” URI.
+We use the UserDto to process and validate the user registration form and inject it using the @ModelAttribute("user") (Data Transfer Object) annotation.
+When the form is submitted it’s automatically validated and errors are available in the BindingResult.
+If the form has any errors, we return to the registration page.
+Otherwise, we redirect to the sign-in page.
+ */
 public class UserController {
 
     @Autowired
@@ -39,8 +46,8 @@ public class UserController {
     and places the session attribute 'user' in the Model.
      */
     @ModelAttribute("user")
-    public UserDTO setUpUserForm() {
-        return new UserDTO();
+    public User setUpUserForm() {
+        return new User();
     }
 
     private UserServiceImpl userDetailsService;
@@ -73,32 +80,5 @@ public class UserController {
         userDetailsService.create(user);
 
         return "redirect:/signin";
-    }
-
-    @GetMapping("/admin/all-users")
-    public String getAllUsers(Model model) {
-        List<User> users = userDetailsService.getAllUsers();
-//        model.addAttribute("users", users);
-        return "all-users";
-    }
-
-    @GetMapping("/admin/edit/{id}")
-    public String showEditForm(@PathVariable("id") int id, Model model) {
-        User user = userDetailsService.getUserById(id);
-//        model.addAttribute("user", user);
-        return "edit-user";
-    }
-
-    @PostMapping("/admin/edit/{id}")
-    public String editUser(@PathVariable("id") int id, @ModelAttribute("user") User user) {
-        user.setId(id);
-        userDetailsService.updateUser(user);
-        return "redirect:/admin/all-users";
-    }
-
-    @DeleteMapping("/admin/delete/{id}")
-    public String deleteUser(@PathVariable int id) {
-        userDetailsService.deleteUser(id);
-        return "redirect:/admin/all-users";
     }
 }

@@ -21,24 +21,42 @@
   </div>
   <div class="main">
     <div class="menu">
-      <div class="menu-item">
+      <div th:if="${user != null}" class="menu-item">
         <a th:href="@{/home}" class="menu-link">Home</a>
       </div>
-      <div class="menu-item">
+      <div th:if="${user != null}" class="menu-item">
         <a th:href="@{/dashboard}" class="menu-link active">Dashboard</a>
       </div>
-      <div class="menu-item">
+      <div th:if="${user != null}" class="menu-item">
         <a th:href="@{/create/events}" class="menu-link">Create</a>
       </div>
     </div>
   </div>
   <div class="util">
     <a th:if="${user == null}" th:href="@{/signin}" class="signin">Sign in</a>
-    <div th:if="${user != null}" class="profile-icon">
-      <img src="/images/profile-icon.png" alt="Profile icon">
+    <div class="dropdown-trigger">
+      <div th:if="${user != null}" class="profile-icon">
+        <img src="/images/profile-icon.png" alt="Profile icon">
+        <div class="profile-menu">
+          <div class="user-details">
+            <img src="/images/profile-icon.png" alt="Profile icon">
+            <div class="user-info">
+              <h3 th:text='|${user.getFirstName()} ${user.getLastName()}|'></h3>
+              <hr>
+            </div>
+          </div>
+          <div class="account-menu">
+            <p>POST ROCKET ACCOUNT</p>
+            <ul class="dropdown-items">
+              <li th:each = "role : ${user.getRoles()}"><span th:text="${role.getName()}"></span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
+
 <div class="foreground">
   <section id="home-banner" style="background-image: url(/images/dashboard-background.jpeg); background-size: cover; background-position: center" >
     <div class="home-banner-contents">

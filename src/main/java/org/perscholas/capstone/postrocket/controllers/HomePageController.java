@@ -18,13 +18,6 @@ import java.util.List;
 @Slf4j
 public class HomePageController {
 
-    private UserServiceImpl userDetailsService;
-
-    @Autowired
-    public HomePageController(UserServiceImpl userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
     @Autowired
     private UserServiceImpl userServiceImpl;
 

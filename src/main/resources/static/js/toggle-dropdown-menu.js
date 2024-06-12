@@ -1,6 +1,6 @@
 
 const trigger = document.querySelectorAll('.dropdown-trigger');
-const parentElement = document.querySelector(".foreground");
+const parentElement = document.querySelector(".foreground, #hero, #use-cases");
 
 function findParentByClass(element, className) {
     while (element && element.parentElement) {
@@ -17,7 +17,7 @@ trigger.forEach(ellipsis => {
 
         dropdown.preventDefault();
 
-        let options = ellipsis.querySelector('.dropdown-menu');
+        let options = ellipsis.querySelector('.dropdown-menu, .profile-menu');
         options.classList.toggle('show');
 
         parentElement.addEventListener("click", (clicked) => {

@@ -8,9 +8,9 @@ import java.util.List;
 public interface RequestService {
     void saveRequest(Request request);
     List<Request> getAllRequests();
-    Request getRequestById(int id);
-    void deleteRequest(int id);
-    Request findRequestById(int id);
-    List<Request> getRequestsByUserId(int userId);
+    Request getRequestById(long id);
+    void deleteRequest(long id);
+    Request findRequestById(long id);
+    List<Request> getRequestsByUserId(long userId);
 
 }

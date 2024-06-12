@@ -79,7 +79,7 @@ public class EventsController {
 				Generate 5 twitter posts for an event from this text - {text}.
 				The first tweet (hook) should be a captivating opening sentence or question to grab attention.
 				The subsequent tweets (body) should include some key points, specific details, or ask questions to encourage audience interaction.
-				The last tweet should include a call to action (e.g., learn more, register for the event). Include hashtags and emoticons.
+				The last tweet should include a call to action (e.g., learn more, register for the event). Include links, hashtags and emoticons.
 				{format}
 				""";
 

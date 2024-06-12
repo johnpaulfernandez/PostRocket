@@ -18,7 +18,7 @@ public class GeneratedPost {
     @Id
     @Column(unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(columnDefinition = "TEXT")
     private String post;
@@ -31,7 +31,7 @@ public class GeneratedPost {
     @JsonProperty
     private Request request;
 
-    public GeneratedPost(int id, String post) {
+    public GeneratedPost(long id, String post) {
         this.id = id;
         this.post = post;
     }

@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
+
 <nav>
   <div class="branding">
     <div class="header-icon">
@@ -20,37 +21,56 @@
   </div>
   <div class="main">
     <div class="menu">
-      <div class="menu-item">
+      <div th:if="${user != null}" class="menu-item">
         <a th:href="@{/home}" class="menu-link">Home</a>
       </div>
-      <div class="menu-item">
+      <div th:if="${user != null}" class="menu-item">
         <a th:href="@{/dashboard}" class="menu-link">Dashboard</a>
       </div>
-      <div class="menu-item">
+      <div th:if="${user != null}" class="menu-item">
         <a th:href="@{/create/events}" class="menu-link active">Create</a>
       </div>
     </div>
   </div>
   <div class="util">
     <a th:if="${user == null}" th:href="@{/signin}" class="signin">Sign in</a>
-    <div th:if="${user != null}" class="profile-icon">
-      <img src="/images/profile-icon.png" alt="Profile icon">
+    <div class="dropdown-trigger">
+      <div th:if="${user != null}" class="profile-icon">
+        <img src="/images/profile-icon.png" alt="Profile icon">
+        <div class="profile-menu">
+          <div class="user-details">
+            <img src="/images/profile-icon.png" alt="Profile icon">
+            <div class="user-info">
+              <h3 th:text='|${user.getFirstName()} ${user.getLastName()}|'></h3>
+              <hr>
+            </div>
+          </div>
+          <div class="account-menu">
+            <p>POST ROCKET ACCOUNT</p>
+            <ul class="dropdown-items">
+              <li th:each = "role : ${user.getRoles()}"><span th:text="${role.getName()}"></span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
+
 <div class="foreground">
-  <section id="heading-section">
-    <div class="title">
-      <h2>Create a new post</h2>
-    </div>
-  </section>
-  <section id="input-section">
-    <div class="heading">
-      <h3>Event details</h3>
-      <span id="charCount" th:text="(${userInput?.getText()?.length()} ?: '0') + ' characters'"></span>
-    </div>
-    <form th:action="@{/create/events}" th:object="${userInput}" method="post">
-      <div th:if="${userInput.getText() == null}">
+  <div class="generate-posts">
+    <section id="heading-section">
+      <div class="title">
+        <h2>Create a new post</h2>
+      </div>
+    </section>
+    <section id="input-section">
+      <div class="heading">
+        <h3>Event details</h3>
+        <span id="charCount" th:text="(${userInput?.getText()?.length()} ?: '0') + ' characters'"></span>
+      </div>
+      <form th:action="@{/create/events}" th:object="${userInput}" method="post">
+        <div th:if="${userInput.getText() == null}">
         <textarea id="details" name="text" rows="15" cols="150">
 
         You may include the following details:
@@ -69,55 +89,56 @@
 
         - Event Hashtags: Are there any relevant hashtags people might use to find this event?
       </textarea>
-      </div>
-
-      <div th:if="${userInput.getText() != null}">
-        <textarea id="text" name="text" rows="15" cols="150" th:field="*{text}"></textarea>
-      </div>
-
-      <br>
-      <div class="action-container">
-        <div><button type="submit" class="accent">Generate</button></div>
-      </div>
-    </form>
-  </section>
-
-  <section th:if="${generatedPosts?.size() > 1}" class="output-section">
-    <h2>Generated tweets</h2>
-    <form th:action="@{/create/events/save}" th:object="${generatedPosts}" method="post">
-      <div id="output-container">
-        <div class="post" th:each = "post : ${generatedPosts}">
-          <span th:text = "${post?.getPost()}"></span>
         </div>
+
+        <div th:if="${userInput.getText() != null}">
+          <textarea id="text" name="text" rows="15" cols="150" th:field="*{text}"></textarea>
+        </div>
+
+        <br>
         <div class="action-container">
-          <input type="text" id="title" name="title" placeholder="Title" th:field="${userInput.title}" required=""/>
-          <div><button type="submit" class="accent">Save thread</button></div>
+          <div><button type="submit" class="accent">Generate</button></div>
         </div>
-        <div th:if="${isSuccess}">
-          <p>Successful!</p>
+      </form>
+    </section>
+
+    <section th:if="${generatedPosts?.size() > 1}" class="output-section">
+      <h2>Generated tweets</h2>
+      <form th:action="@{/create/events/save}" th:object="${generatedPosts}" method="post">
+        <div id="output-container">
+          <div class="post" th:each = "post : ${generatedPosts}">
+            <span th:text = "${post?.getPost()}"></span>
+          </div>
+          <div class="action-container">
+            <input type="text" id="title" name="title" placeholder="Title" th:field="${userInput.title}" required=""/>
+            <div><button type="submit" class="accent">Save thread</button></div>
+          </div>
+          <div th:if="${isSuccess}">
+            <p>Successful!</p>
+          </div>
+          <div th:if="${errorMessage != null}">
+            <p th:text="${errorMessage}">Error saving!</p>
+          </div>
         </div>
-        <div th:if="${errorMessage != null}">
-          <p th:text="${errorMessage}">Error saving!</p>
-        </div>
-      </div>
-    </form>
-  </section>
+      </form>
+    </section>
 
-<!--  <section class="output-section">-->
-<!--    <form th:action="@{/create/events/save}" method="post">-->
-<!--    <h2>Generated tweets</h2>-->
-<!--      <div id="output-container"></div>-->
-<!--      <div class="action-container">-->
-<!--        <div><button type="submit" class="accent">Save thread</button></div>-->
-<!--      </div>-->
-<!--    </form>-->
-<!--  </section>-->
+    <!--  <section class="output-section">-->
+    <!--    <form th:action="@{/create/events/save}" method="post">-->
+    <!--    <h2>Generated tweets</h2>-->
+    <!--      <div id="output-container"></div>-->
+    <!--      <div class="action-container">-->
+    <!--        <div><button type="submit" class="accent">Save thread</button></div>-->
+    <!--      </div>-->
+    <!--    </form>-->
+    <!--  </section>-->
 
-<!--  <script th:src="@{/js/generate-sample-data.js}"></script>-->
-  <script th:src="@{/js/validate-input.js}"></script>
+    <!--  <script th:src="@{/js/generate-sample-data.js}"></script>-->
+    <script th:src="@{/js/validate-input.js}"></script>
 
+  </div>
+  <section style="padding: 150px;"></section>
 </div>
-<section style="padding: 150px;"></section>
 <footer>Created by JP Fernandez</footer>
 <script th:src="@{/js/scroll.js}"></script>
 </body>

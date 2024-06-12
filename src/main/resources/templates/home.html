@@ -33,8 +33,25 @@
   </div>
   <div class="util">
     <a th:if="${user == null}" th:href="@{/signin}" class="signin">Sign in</a>
-    <div th:if="${user != null}" class="profile-icon">
-      <img src="/images/profile-icon.png" alt="Profile icon">
+    <div class="dropdown-trigger">
+      <div th:if="${user != null}" class="profile-icon">
+        <img src="/images/profile-icon.png" alt="Profile icon">
+        <div class="profile-menu">
+          <div class="user-details">
+            <img src="/images/profile-icon.png" alt="Profile icon">
+            <div class="user-info">
+              <h3 th:text='|${user.getFirstName()} ${user.getLastName()}|'></h3>
+              <hr>
+            </div>
+          </div>
+          <div class="account-menu">
+            <p>POST ROCKET ACCOUNT</p>
+            <ul class="dropdown-items">
+              <li th:each = "role : ${user.getRoles()}"><span th:text="${role.getName()}"></span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
@@ -57,7 +74,7 @@
     <h2>Generate tailored content for any goal</h2>
     <div class="tiles-container">
       <div class="tile">
-        <div class="drop-zone">
+        <div class="drop-zone" th:onclick="|window.location.href='/create/events'|">
           <article>
             <div class="card-container">
               <div class="item">
@@ -180,5 +197,6 @@
 </section>
 <section style="padding: 150px;"></section>
 <footer>Created by JP Fernandez</footer>
+<script th:src="@{/js/toggle-dropdown-menu.js}"></script>
 </body>
 </html>

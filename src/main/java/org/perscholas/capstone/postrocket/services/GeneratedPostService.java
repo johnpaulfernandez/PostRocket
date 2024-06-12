@@ -8,7 +8,7 @@ import java.util.List;
 public interface GeneratedPostService {
     void saveGeneratedPost(GeneratedPost generatedPost);
     List<GeneratedPost> getAllGeneratedPosts();
-    GeneratedPost getGeneratedPostById(int id);
-    void deleteGeneratedPost(int id);
-    GeneratedPost findGeneratedPostById(int id);
+    GeneratedPost getGeneratedPostById(long id);
+    void deleteGeneratedPost(long id);
+    GeneratedPost findGeneratedPostById(long id);
 }

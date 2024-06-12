@@ -29,13 +29,13 @@ public class GeneratedPostServiceImpl implements GeneratedPostService {
     }
 
     @Override
-    public GeneratedPost getGeneratedPostById(int id) {
+    public GeneratedPost getGeneratedPostById(long id) {
         return generatedPostRepository.findById(id).orElse(null);
     }
 
     @Override
     @Transactional
-    public void deleteGeneratedPost(int id) {
+    public void deleteGeneratedPost(long id) {
         GeneratedPost generatedPost = generatedPostRepository.findById(id).orElse(null);
         if (generatedPost != null) {
             generatedPostRepository.delete(generatedPost);
@@ -43,7 +43,7 @@ public class GeneratedPostServiceImpl implements GeneratedPostService {
     }
 
     @Override
-    public GeneratedPost findGeneratedPostById(int id) {
+    public GeneratedPost findGeneratedPostById(long id) {
         return generatedPostRepository.findGeneratedPostById(id);
     }
 }

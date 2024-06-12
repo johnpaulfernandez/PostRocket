@@ -7,5 +7,4 @@ public class UserInput {
     private String text;
     private String title;
     private String updates;
-
 }

@@ -434,3 +434,107 @@ button.secondary {
 button.secondary:hover {
     background-color: #d1d1d1;
 }
+
+.dropdown-menu {
+    display: none;
+    position: absolute;  /* Position relative to trigger */
+    z-index: 1;  /* Ensure it appears above other elements */
+    background-color: var(--base-color);
+    min-width: 32px;
+    min-height: 32px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: var(--gray-300);
+    outline: none;
+    transition: transform .13s ease-in-out, opacity .13s ease-in-out, visibility 0ms linear .13s;
+}
+
+.dropdown-menu.show {
+    display: inline-flex;
+}
+
+.profile-menu.show  {
+    display: block;
+}
+
+.user-info {
+    margin-left: 14px;
+}
+
+.dropdown-items {
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 0 0;
+    padding: 0;
+    list-style-type: none;
+    overflow: auto;
+
+    li {
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 7px 80px 7px 10px;
+        margin: 0;
+        border-left: 2px solid transparent;
+        min-height: 32px;
+        font-size: 14px;
+        font-weight: 400;
+        font-style: normal;
+        text-decoration: none;
+        background-color: transparent;
+
+        span {
+            flex: 1 1 auto;
+            line-height: 1.3;
+            hyphens: auto;
+            overflow-wrap: break-word;
+            cursor: pointer;
+            width: calc(100% - 24px);
+            font-size: 14px;
+            font-weight: 400;
+            font-style: normal;
+        }
+    }
+}
+
+.dropdown-menu .dropdown-items li:hover, .small-icon:hover {
+    background-color: #eaeaea;
+    box-shadow: none;
+}
+
+.profile-menu {
+    display: none;
+    z-index: 1;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 8px;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-shadow: 0 0 0.188rem 0 rgba(0, 0, 0, .12), 0 0.188rem 0.5rem 0 rgba(0, 0, 0, .04), 0 0.25rem 1rem 0 rgba(0, 0, 0, .08);
+    cursor: auto;
+    padding: 1rem 1rem;
+}
+
+.account-menu {
+    padding: 1rem 1rem;
+    font-size: 11px;
+
+    li {
+        padding: 0;
+    }
+}
+
+.user-details {
+    display: flex;
+
+     img {
+         width: 75px;
+         height: 75px;
+     }
+}

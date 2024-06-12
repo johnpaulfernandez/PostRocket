@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @Repository
-public interface RequestRepository extends JpaRepository<Request, Integer> {
-    public Request findRequestById(int id);
-    List<Request> findRequestsByUserId(int userId);
+public interface RequestRepository extends JpaRepository<Request, Long> {
+    public Request findRequestById(long id);
+    List<Request> findRequestsByUserId(long userId);
 }
