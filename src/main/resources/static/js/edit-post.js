@@ -62,6 +62,8 @@ editButtons.forEach(item => {
                 parentElement.style.border = "none";
                 textArea.blur();
                 document.getElementById(textArea.id).setAttribute("value", textArea.value);
+
+                parentElement.querySelector('input[name="_method"]').value = 'EDIT';
                 parentElement.submit();
             });
 

@@ -64,7 +64,7 @@
           </div>
 
           <form class="panel-item" id="panel" method="post"
-                style="display: none;" th:action="@{/update/events/{postId}(postId=${post.getId()})}"
+                style="display: none;" th:action="@{/dashboard/events/{postId}(postId=${post.getId()})}"
                 th:each="post : ${request.getPosts()}">
             <input type="hidden"
                    th:id="|id@{{postId}(postId=${post.getId()})}|"
@@ -82,8 +82,9 @@
               <button class="small-icon"><i class="fa-solid fa-ellipsis"></i></button>
               <div class="dropdown-menu">
                 <ul class="dropdown-items">
-                  <li id="edit-action">Edit</li>
-                  <li id="delete-action">Delete</li>
+                  <input type="hidden" name="_method" th:value="''">
+                  <li id="edit-action" th:text="'Edit'">Edit</li>
+                  <li id="delete-action" th:text="'Delete'">Delete</li>
                 </ul>
               </div>
             </div>
@@ -106,6 +107,6 @@
 <script th:src="@{/js/toggle-accordion.js}"></script>
 <script th:src="@{/js/toggle-dropdown-menu.js}"></script>
 <script th:src="@{/js/edit-post.js}"></script>
-<script th:src="@{/js/scroll.js}"></script>
+<script th:src="@{/js/delete-post.js}"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package org.perscholas.capstone.postrocket.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -47,21 +48,30 @@ public class DashboardController {
         return getDashboardData(map);
     }
 
-    @PostMapping("/update/events/{postId}")
-    public String updatePost(@PathVariable("postId") int postId, @ModelAttribute GeneratedPost post, ModelMap map)
+    @PostMapping("/dashboard/events/{postId}")
+    public String updatePost(@PathVariable("postId") int postId, @ModelAttribute GeneratedPost post, ModelMap map, @RequestParam("_method") String method)
     {
-        try {
-            GeneratedPost postToUpdate = postService.findGeneratedPostById(postId);
+        if (method.equals("EDIT")) {
+            try {
+                GeneratedPost postToUpdate = postService.findGeneratedPostById(postId);
 
-            if (post != null) {
-                postToUpdate.setPost(post.getNewValue());
+                if (post != null) {
+                    postToUpdate.setPost(post.getNewValue());
+                    postService.saveGeneratedPost(postToUpdate);
+                    map.addAttribute("isSuccess", true);
+                }
+            } catch (Exception e) {
+                map.addAttribute("errorMessage", "Update failed!");
             }
-
-            postService.saveGeneratedPost(postToUpdate);
-
-            map.addAttribute("isSuccess", true);
-        } catch (Exception e) {
-            map.addAttribute("errorMessage", "Update failed!");
+        } else if (method.equals("DELETE")) {
+            try {
+                if (post != null) {
+                    postService.deleteGeneratedPost(postId);
+                    map.addAttribute("isSuccess", true);
+                }
+            } catch (Exception e) {
+                map.addAttribute("errorMessage", "Delete failed!");
+            }
         }
 
         return getDashboardData(map);
