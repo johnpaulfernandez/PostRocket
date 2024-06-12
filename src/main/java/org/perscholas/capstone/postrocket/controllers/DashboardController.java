@@ -9,10 +9,7 @@ import org.perscholas.capstone.postrocket.models.GeneratedPost;
 import org.perscholas.capstone.postrocket.models.Request;
 import org.perscholas.capstone.postrocket.models.User;
 import org.perscholas.capstone.postrocket.models.UserInput;
-import org.perscholas.capstone.postrocket.services.RequestService;
-import org.perscholas.capstone.postrocket.services.RequestServiceImpl;
-import org.perscholas.capstone.postrocket.services.UserService;
-import org.perscholas.capstone.postrocket.services.UserServiceImpl;
+import org.perscholas.capstone.postrocket.services.*;
 import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
@@ -23,10 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -35,15 +29,55 @@ import java.util.Map;
 @Slf4j
 public class DashboardController {
 
-    private final UserService userService;
     private final RequestService requestService;
+
+    private final GeneratedPostService postService;
 
 
     @Autowired
     private UserServiceImpl userServiceImpl;
 
-    public DashboardController(UserService userService, RequestService requestService) {
-        this.userService = userService;
+    public DashboardController(RequestService requestService, GeneratedPostService postService) {
         this.requestService = requestService;
+        this.postService = postService;
+    }
+
+    @GetMapping("/dashboard")
+    public String showDashboardPage(ModelMap map) {
+        return getDashboardData(map);
+    }
+
+    @PostMapping("/update/events/{postId}")
+    public String updatePost(@PathVariable("postId") int postId, @ModelAttribute GeneratedPost post, ModelMap map)
+    {
+        try {
+            GeneratedPost postToUpdate = postService.findGeneratedPostById(postId);
+
+            if (post != null) {
+                postToUpdate.setPost(post.getNewValue());
+            }
+
+            postService.saveGeneratedPost(postToUpdate);
+
+            map.addAttribute("isSuccess", true);
+        } catch (Exception e) {
+            map.addAttribute("errorMessage", "Update failed!");
+        }
+
+        return getDashboardData(map);
+
+    }
+
+    private String getDashboardData(ModelMap map) {
+        UserDTO userDTO = userServiceImpl.getUser();
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        User user = modelMapper.map(userDTO, User.class);
+        map.addAttribute("user", user);
+
+        List<Request> requests = requestService.getRequestsByUserId(userServiceImpl.getUserByEmail(user.getEmail()).getId());
+        map.addAttribute("requests", requests);
+
+        return "dashboard";
     }
 }

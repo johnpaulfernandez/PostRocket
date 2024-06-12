@@ -90,8 +90,14 @@
           <span th:text = "${post?.getPost()}"></span>
         </div>
         <div class="action-container">
-          <input type="text" id="title" name="title" placeholder="Title" required=""/>
+          <input type="text" id="title" name="title" placeholder="Title" th:field="${userInput.title}" required=""/>
           <div><button type="submit" class="accent">Save thread</button></div>
+        </div>
+        <div th:if="${isSuccess}">
+          <p>Successful!</p>
+        </div>
+        <div th:if="${errorMessage != null}">
+          <p th:text="${errorMessage}">Error saving!</p>
         </div>
       </div>
     </form>
@@ -113,5 +119,6 @@
 </div>
 <section style="padding: 150px;"></section>
 <footer>Created by JP Fernandez</footer>
+<script th:src="@{/js/scroll.js}"></script>
 </body>
 </html>

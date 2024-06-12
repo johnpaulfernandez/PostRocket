@@ -20,7 +20,10 @@ public class GeneratedPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(columnDefinition = "TEXT")
     private String post;
+
+    @Column(columnDefinition = "TEXT")
     private String newValue;
 
     @ManyToOne(fetch = FetchType.LAZY)

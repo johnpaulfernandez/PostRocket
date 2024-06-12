@@ -40,6 +40,8 @@ editButtons.forEach(item => {
                 console.log("No sibling found for the clicked button.");
             }
 
+            originalValue = textArea.value;
+
             xmark.addEventListener("click", (x) => {
                 x.preventDefault();
                 save.classList.remove("show");
@@ -48,6 +50,7 @@ editButtons.forEach(item => {
                 textArea.style.fontWeight = "400";
                 parentElement.style.border = "none";
                 textArea.blur();
+                textArea.value = originalValue;
             });
 
             save.addEventListener("click", (saveButton) => {
@@ -58,7 +61,6 @@ editButtons.forEach(item => {
                 textArea.style.fontWeight = "400";
                 parentElement.style.border = "none";
                 textArea.blur();
-                console.log(textArea.value);
                 document.getElementById(textArea.id).setAttribute("value", textArea.value);
                 parentElement.submit();
             });
