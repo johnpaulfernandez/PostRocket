@@ -1,5 +1,6 @@
 package org.perscholas.capstone.postrocket.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -16,6 +17,7 @@ import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +33,7 @@ import java.util.Map;
 
 
 @Controller
-@SessionAttributes({"requestOutput", "userInput"})
+@SessionAttributes({"generatedPosts", "userInput"})
 @Slf4j
 public class EventsController {
 
@@ -51,6 +53,7 @@ public class EventsController {
     @Autowired
     private RequestServiceImpl requestServiceImpl;
 
+
     @Autowired
     public EventsController(OpenAiChatModel chatModel, UserService userService, RequestService requestService, GeneratedPostService postService) {
         this.chatModel = chatModel;
@@ -63,21 +66,19 @@ public class EventsController {
     public String showEventsPage(UserInput userInput, Model model) {
         model.addAttribute("user", userServiceImpl.getUser());
         model.addAttribute("userInput", userInput);
-        model.addAttribute("user", userServiceImpl.getUser());
         return "events";
     }
 
     @PostMapping("/create/events")
     public String generateThread(UserInput userInput, ModelMap map) {
-        BeanOutputConverter<Request> outputConverter = new BeanOutputConverter<>(Request.class);
+        BeanOutputConverter<List<GeneratedPost>> outputConverter = new BeanOutputConverter<>(new ParameterizedTypeReference<List<GeneratedPost>>() { });
 
         String format = outputConverter.getFormat();
         String template = """
 				Generate 5 twitter posts for an event from this text - {text}.
 				The first tweet (hook) should be a captivating opening sentence or question to grab attention.
 				The subsequent tweets (body) should include some key points, specific details, or ask questions to encourage audience interaction.
-				The last tweet should include a call to action (e.g., learn more, register for the event).
-				Include hashtags.
+				The last tweet should include a call to action (e.g., learn more, register for the event). Include hashtags and no emoticons.
 				{format}
 				""";
 
@@ -85,15 +86,13 @@ public class EventsController {
         Prompt prompt = new Prompt(promptTemplate.createMessage());
 
         Generation generation = chatModel.call(prompt).getResult();
-        Request requestOutput = new Request();
+        List<GeneratedPost> generatedPosts = outputConverter.convert(generation.getOutput().getContent());
 
-        requestOutput = outputConverter.convert(generation.getOutput().getContent());
-
-//        Request requestOutput = null;
+//        Request generatedPosts = null;
 
         map.addAttribute("user", userServiceImpl.getUser());
         map.addAttribute("userInput", userInput);
-        map.addAttribute("requestOutput", requestOutput);
+        map.addAttribute("generatedPosts", generatedPosts);
 
         return "events";
     }
@@ -107,17 +106,10 @@ public class EventsController {
 
         request.setName(userInput.getTitle());
 
-//        ModelMapper modelMapper = new ModelMapper();
-//        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-//        User user = modelMapper.map(userServiceImpl.getUser(), User.class);
-
-
         try {
             userDetails = userService.loadUserByUsername(userServiceImpl.getUser().getEmail());
             log.info(userServiceImpl.getUser().getEmail());
         } catch (Exception e) {
-//            request.setUser(user);
-
             requestServiceImpl.setSuccessUrl(SUCCESS_URL);
             map.addAttribute("successUrl", SUCCESS_URL);
             return "signin";
@@ -129,11 +121,10 @@ public class EventsController {
 
         requestService.saveRequest(request);
 
-        Request requestAttribute = (Request) map.getAttribute("requestOutput");
+        ArrayList<GeneratedPost> generatedPosts = (ArrayList<GeneratedPost>) map.getAttribute("generatedPosts");
 
-        if (requestAttribute != null) {
-
-            for (GeneratedPost post : requestAttribute.getPosts()) {
+        if (generatedPosts != null) {
+            for (GeneratedPost post : generatedPosts) {
                 GeneratedPost newPost = new GeneratedPost();
                 newPost.setRequest(request);
                 newPost.setPost(post.getPost());
@@ -147,10 +138,33 @@ public class EventsController {
         return "events";
     }
 
+    @GetMapping("/dashboard")
+    public String showDashboardPage(Model map, UserInput userInput) {
+
+        UserDTO userDTO = userServiceImpl.getUser();
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        User user = modelMapper.map(userDTO, User.class);
+        map.addAttribute("user", user);
+
+        List<Request> requests = requestService.getRequestsByUserId(userServiceImpl.getUserByEmail(user.getEmail()).getId());
+        map.addAttribute("requests", requests);
+
+        map.addAttribute("userInput", userInput);
+        return "dashboard";
+    }
+
     @PostMapping("/update/events/{postId}")
-    public void updatePost(@PathVariable("postId") int postId)
+    public String updatePost(@PathVariable("postId") int postId, ModelMap map, @ModelAttribute GeneratedPost post)
     {
-        GeneratedPost post = postService.findGeneratedPostById(postId);
-        postService.saveGeneratedPost(post);
+        GeneratedPost postToUpdate = postService.findGeneratedPostById(postId);
+
+        if (post != null) {
+            postToUpdate.setPost(post.getNewValue());
+        }
+
+        postService.saveGeneratedPost(postToUpdate);
+
+        return "dashboard";
     }
 }

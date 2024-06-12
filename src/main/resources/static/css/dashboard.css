@@ -84,6 +84,7 @@ section#table {
 
     .card-container {
         display: flex;
+        justify-content: unset;
     }
 
     .thread {

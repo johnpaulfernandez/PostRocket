@@ -21,6 +21,7 @@ public class GeneratedPost {
     private int id;
 
     private String post;
+    private String newValue;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "request_id")

@@ -82,15 +82,15 @@
     </form>
   </section>
 
-  <section th:if="${requestOutput?.getPosts()?.size() > 1}" class="output-section">
+  <section th:if="${generatedPosts?.size() > 1}" class="output-section">
     <h2>Generated tweets</h2>
-    <form th:action="@{/create/events/save}" th:object="${requestOutput}" method="post">
+    <form th:action="@{/create/events/save}" th:object="${generatedPosts}" method="post">
       <div id="output-container">
-        <div class="post" th:each = "post : ${requestOutput?.getPosts()}">
+        <div class="post" th:each = "post : ${generatedPosts}">
           <span th:text = "${post?.getPost()}"></span>
         </div>
         <div class="action-container">
-          <input type="text" id="title" name="title" placeholder="Title" required="" autofocus=""/>
+          <input type="text" id="title" name="title" placeholder="Title" required=""/>
           <div><button type="submit" class="accent">Save thread</button></div>
         </div>
       </div>

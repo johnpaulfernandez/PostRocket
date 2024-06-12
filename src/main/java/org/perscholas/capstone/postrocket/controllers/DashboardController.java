@@ -1,6 +1,11 @@
 package org.perscholas.capstone.postrocket.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.perscholas.capstone.postrocket.dto.UserDTO;
+import org.perscholas.capstone.postrocket.models.GeneratedPost;
 import org.perscholas.capstone.postrocket.models.Request;
 import org.perscholas.capstone.postrocket.models.User;
 import org.perscholas.capstone.postrocket.models.UserInput;
@@ -19,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -39,13 +45,5 @@ public class DashboardController {
     public DashboardController(UserService userService, RequestService requestService) {
         this.userService = userService;
         this.requestService = requestService;
-    }
-
-    @GetMapping("/dashboard")
-    public String showDashboardPage(Model map) {
-        map.addAttribute("user", userServiceImpl.getUser());
-        List<Request> requests = requestService.getAllRequests();
-        map.addAttribute("requests", requests);
-        return "dashboard";
     }
 }

@@ -59,13 +59,24 @@
       <div class="card-container">
         <div class = "thread" th:each = "request : ${requests}">
           <div class="thread-header">
-            <div class="accordion" th:text = "${request.getName()}"></div>
+            <div class="accordion" th:text="${request.getName()}"></div>
             <i class="fa-solid fa-chevron-down"></i>
           </div>
 
-          <form id="panel" class="panel-item" style="display: none;" th:action="@{/update/events/{postId}(postId=${post.getId()})}" th:each = "post : ${request.getPosts()}"  method="post">
-            <textarea disabled rows="1" cols="200" th:text = "${post.getPost()}"></textarea>
-            <button type="submit" class="small-icon save"><i class="fa-regular fa-circle-check fa-2xl" style="color: #888888;"></i></button>
+          <form class="panel-item" id="panel" method="post"
+                style="display: none;" th:action="@{/update/events/{postId}(postId=${post.getId()})}"
+                th:each="post : ${request.getPosts()}">
+            <input type="hidden"
+                   th:id="|id@{{postId}(postId=${post.getId()})}|"
+                   th:name="newValue"
+                   th:value="${post.getPost()}">
+            <textarea disabled
+                      th:name="newValue"
+                      th:id="|id@{{postId}(postId=${post.getId()})}|"
+                      rows="1"
+                      cols="200"
+                      th:text="${post.getPost()}"></textarea>
+            <button th:id="|button@{{postId}(postId=${post.getId()})}|" type="submit" class="small-icon save"><i class="fa-regular fa-circle-check fa-2xl" style="color: #888888;"></i></button>
             <button class="small-icon cancel"><i class="fa-regular fa-circle-xmark fa-2xl" style="color: #888888;"></i></button>
             <div class="dropdown-trigger">
               <button class="small-icon"><i class="fa-solid fa-ellipsis"></i></button>

@@ -11,4 +11,6 @@ public interface RequestService {
     Request getRequestById(int id);
     void deleteRequest(int id);
     Request findRequestById(int id);
+    List<Request> getRequestsByUserId(int userId);
+
 }

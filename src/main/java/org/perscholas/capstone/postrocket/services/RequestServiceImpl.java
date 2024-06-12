@@ -51,4 +51,9 @@ public class RequestServiceImpl implements RequestService {
     public Request findRequestById(int id) {
         return requestRepository.findRequestById(id);
     }
+
+    @Override
+    public List<Request> getRequestsByUserId(int userId) {
+        return requestRepository.findRequestsByUserId(userId);
+    }
 }
