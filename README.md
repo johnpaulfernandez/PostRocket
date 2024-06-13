@@ -1,6 +1,6 @@
 # Post Rocket
 
-This project lets you generate cohesive and compelling Twitter narratives in seconds, using Spring Boot and OpenAI API, for effortless event promotion, product launches, and more.
+Generate cohesive and compelling Twitter narratives in seconds, using Spring Boot and OpenAI API, for effortless event promotion, product launches, and more.
 Simply provide details about your event, product launch, or topic, and this web app crafts a compelling Twitter thread to boost your reach.
 
 In the future, the project can also guide users, especially social media marketers, through the process of creating compelling and informative Facebook posts and relevant AI-generated visuals.
