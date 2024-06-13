@@ -1,38 +1,24 @@
 package org.perscholas.capstone.postrocket.repositories;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
-import org.perscholas.capstone.postrocket.dto.UserDTO;
+import org.junit.jupiter.api.*;
 import org.perscholas.capstone.postrocket.models.Role;
 import org.perscholas.capstone.postrocket.models.User;
-import org.perscholas.capstone.postrocket.services.RoleServiceImpl;
-import org.perscholas.capstone.postrocket.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
-public class RoleRepositoryTest {
+class UserRepositoryTest {
 
     @Autowired
     private RoleRepository roleRepository;
@@ -63,43 +49,17 @@ public class RoleRepositoryTest {
     }
 
     @Test
-    public void testFindRoleByName() {
+    public void findUserByEmail() {
         // Given
-        Role role = new Role();
-        role.setName("Test_Role");
-
-        // When
-        roleRepository.save(role);
-
-        // Then
-        Role foundRole = roleRepository.findRoleByName(role.getName());
-        assertThat(foundRole).isNotNull();
-        assertThat(foundRole.getName()).isEqualTo("Test_Role");
-    }
-
-    @Test
-    public void testSaveAndFindRoleByUserID() {
-        // Given
-        Role role = new Role();
-        role.setName("Free");
-
-        List<Role> roleArray = new ArrayList<>();
-        roleArray.add(role);
-
-        // When
-        roleRepository.save(role);
-
         User user = new User();
-        user.setId(1);
-        user.setEmail("test@example.com");
-        user.setPassword("password");
-        user.setRoles(roleArray);
+        user.setEmail("testUser@gmail.com");
 
+        // When
         userRepository.save(user);
 
         // Then
-        List<Role> foundRole = roleRepository.findRoleByUser(user.getId());
-        assertThat(foundRole).isNotNull();
-        assertThat(foundRole.getFirst().getName()).contains("Free");
+        User foundUser = userRepository.findUserByEmail(user.getEmail());
+        assertThat(foundUser).isNotNull();
+        assertThat(foundUser.getEmail()).isEqualTo("testUser@gmail.com");
     }
 }
