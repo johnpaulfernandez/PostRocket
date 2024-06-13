@@ -44,8 +44,8 @@ public class DashboardController {
     }
 
     @GetMapping("/dashboard")
-    public String showDashboardPage(ModelMap map) {
-        return getDashboardData(map);
+    public String showDashboardPage(ModelMap map, @RequestParam(defaultValue = "false") boolean sortByTitleAsc) {
+        return getDashboardData(map, sortByTitleAsc);
     }
 
     @PostMapping("/dashboard/events/{postId}")
@@ -74,16 +74,22 @@ public class DashboardController {
             }
         }
 
-        return getDashboardData(map);
+        return getDashboardData(map, true);
 
     }
 
-    private String getDashboardData(ModelMap map) {
+    private String getDashboardData(ModelMap map, boolean ascendingOrder) {
         User user = userServiceImpl.getUser();
         map.addAttribute("user", user);
         map.addAttribute("role", user.getRoles());
 
-        List<Request> requests = requestService.getRequestsByUserId(userServiceImpl.getUserByEmail(user.getEmail()).getId());
+        List<Request> requests;
+
+        if (ascendingOrder) {
+            requests = requestService.getRequestsByUserIdAsc(userServiceImpl.getUserByEmail(user.getEmail()).getId());
+        } else {
+            requests = requestService.getRequestsByUserIdDesc(userServiceImpl.getUserByEmail(user.getEmail()).getId());
+        }
         map.addAttribute("requests", requests);
 
         return "dashboard";

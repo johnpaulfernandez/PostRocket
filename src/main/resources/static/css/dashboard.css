@@ -73,6 +73,12 @@ h2 {
     font-weight: 400;
 }
 
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 section#table {
     display: flex;
     max-width: 1400px;
@@ -85,6 +91,7 @@ section#table {
     .card-container {
         display: flex;
         justify-content: unset;
+        padding: unset;
     }
 
     .thread {
@@ -174,3 +181,21 @@ form.panel-item {
     margin: 0 5px;
 }
 
+.sort-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px 0;
+}
+
+.sort-item {
+    text-decoration: none;
+    color: var(--text-color);
+    margin-left: 0.5rem;
+    padding: 3px 6px;
+    outline: 1px dotted #ddd;
+
+    &.active {
+        font-weight: 700;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+}

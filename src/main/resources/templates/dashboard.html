@@ -75,6 +75,18 @@
   <section id="table">
     <div class="row-group">
       <div class="card-container">
+
+        <div class="header">
+          <h1>Twitter threads</h1>
+          <div class="sort-container">
+            <span>Sort title by</span>
+            <div class="sort-menu">
+              <a id="asc" th:href="@{/dashboard?sortByTitleAsc=true}" class="sort-item">A -Z</a>
+              <a id="desc" th:href="@{/dashboard?sortByTitleAsc=false}" class="sort-item">Z - A</a>
+            </div>
+          </div>
+        </div>
+
         <div class = "thread" th:each = "request : ${requests}">
           <div class="thread-header" th:id="|thread-id-@{{requestId}(requestId=${request.getId()})}|">
             <div class="accordion" th:text="${request.getName()}"></div>
@@ -126,5 +138,6 @@
 <script th:src="@{/js/toggle-dropdown-menu.js}"></script>
 <script th:src="@{/js/edit-post.js}"></script>
 <script th:src="@{/js/delete-post.js}"></script>
+<script th:src="@{/js/sort.js}"></script>
 </body>
 </html>

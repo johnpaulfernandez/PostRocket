@@ -12,5 +12,8 @@ public interface RequestService {
     void deleteRequest(long id);
     Request findRequestById(long id);
     List<Request> getRequestsByUserId(long userId);
+    List<Request> getRequestsByUserIdAsc(long userId);
+    List<Request> getRequestsByUserIdDesc(long userId);
+
 
 }

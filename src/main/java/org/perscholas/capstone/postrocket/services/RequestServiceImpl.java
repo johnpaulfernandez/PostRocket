@@ -61,4 +61,14 @@ public class RequestServiceImpl implements RequestService {
     public List<Request> getRequestsByUserId(long userId) {
         return requestRepository.findRequestsByUserId(userId);
     }
+
+    @Override
+    public List<Request> getRequestsByUserIdAsc(long userId) {
+        return requestRepository.findRequestsByUserIdAsc(userId);
+    }
+
+    @Override
+    public List<Request> getRequestsByUserIdDesc(long userId) {
+        return requestRepository.findRequestsByUserIdDesc(userId);
+    }
 }
