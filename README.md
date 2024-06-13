@@ -24,6 +24,8 @@ Spring Data JPA and MySQL is used in this project to store generated Twitter thr
 
 Lastly, Spring Security is implemented to enforce authentication and authorization protocols, guaranteeing that only authorized users can access and manage their information.
 
+
 <ins>Database schema diagram</ins>
 
-<img width="791" alt="DB Diagram" src="https://github.com/johnpaulfernandez/PostRocket/assets/25147160/0920c191-a98a-4d19-8cd0-2364c40032bc">
+<img width="786" alt="DB Diagram" src="https://github.com/johnpaulfernandez/PostRocket/assets/25147160/7d338bb0-a86a-40a7-9478-534abd1ece74">
+
