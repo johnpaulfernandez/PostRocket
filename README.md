@@ -5,6 +5,11 @@ Simply provide details about your event, product, or topic, and this web app cra
 
 In the future, the project can also guide users, especially social media marketers, through the process of creating compelling and informative Facebook posts and relevant AI-generated visuals.
 
+### Video Walkthrough
+
+
+https://github.com/johnpaulfernandez/PostRocket/assets/25147160/dcbd1d3f-f92d-469b-ba02-c5aa082e62c3
+
 
 ### Technical Details
 
