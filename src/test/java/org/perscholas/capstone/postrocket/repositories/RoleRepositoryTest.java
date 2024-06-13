@@ -83,23 +83,20 @@ public class RoleRepositoryTest {
         Role role = new Role();
         role.setName("Free");
 
-        List<Role> roleArray = new ArrayList<>();
-        roleArray.add(role);
-
         // When
         roleRepository.save(role);
 
         User user = new User();
-        user.setId(1);
+        user.setId(1L);
         user.setEmail("test@example.com");
         user.setPassword("password");
-        user.setRoles(roleArray);
+        user.setRoles(Arrays.asList(role));
 
         userRepository.save(user);
 
         // Then
-        List<Role> foundRole = roleRepository.findRoleByUser(user.getId());
+        Role foundRole = roleRepository.findRoleById(1L);
         assertThat(foundRole).isNotNull();
-        assertThat(foundRole.getFirst().getName()).contains("Free");
+        assertThat(foundRole.getName()).isEqualTo("Free");
     }
 }

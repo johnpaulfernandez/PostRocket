@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(encoder.encode(user.getPassword()));
 
-        Role userRole = roleService.findRoleByRoleName("Free");
+        Role userRole = roleService.findRoleByName("Free");
         if (userRole == null) {
             Role role = new Role();
             role.setName("Free");

@@ -63,7 +63,7 @@ class UserServiceImplTest {
         user.setRoles(Arrays.asList(role));
 
         when(encoder.encode(userDTO.getPassword())).thenReturn("encodedPassword");
-        when(roleService.findRoleByRoleName("FREE")).thenReturn(role);
+        when(roleService.findRoleByName("FREE")).thenReturn(role);
 
         userService.create(userDTO);
 

@@ -1,7 +1,7 @@
 # Post Rocket
 
-Generate cohesive and compelling Twitter narratives in seconds, using Spring Boot and OpenAI API, for effortless event promotion, product launches, and more.
-Simply provide details about your event, product launch, or topic, and this web app crafts a compelling Twitter thread to boost your reach.
+Generate cohesive and compelling Twitter narratives in seconds, using [Spring AI](https://docs.spring.io/spring-ai/reference/index.html) and [OpenAI API](https://openai.com/api/), for effortless event promotion, product launches, and more.
+Simply provide details about your event, product, or topic, and this web app crafts a compelling Twitter thread to boost your reach.
 
 In the future, the project can also guide users, especially social media marketers, through the process of creating compelling and informative Facebook posts and relevant AI-generated visuals.
 
@@ -20,6 +20,6 @@ The frontend is built using Spring MVC for handling user interactions and Thymel
 
 #### Data Management
 
-Spring Data JPA and MySQL to store generated Twitter threads and user data.
+Spring Data JPA and MySQL is used in this project to store generated Twitter threads and user data.
 
-Spring Security is implemented to prioritize data security. It enforces authentication and authorization protocols, guaranteeing that only authorized users can access and manage their information.
+Lastly, Spring Security is implemented to enforce authentication and authorization protocols, guaranteeing that only authorized users can access and manage their information.

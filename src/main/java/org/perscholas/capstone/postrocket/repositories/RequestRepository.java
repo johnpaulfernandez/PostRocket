@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Long> {
     public Request findRequestById(long id);
+    @Query(value = "select * from request where request.user_id = (select id from user where id = :userId)", nativeQuery = true)
     List<Request> findRequestsByUserId(long userId);
 
     @Query(value = "select * from request where request.user_id = (select id from user where id = :userId) ORDER BY name ASC", nativeQuery = true)
