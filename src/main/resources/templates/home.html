@@ -50,6 +50,11 @@
               <li th:each = "role : ${user.getRoles()}"><span th:text="${role.getName()}"></span></li>
             </ul>
           </div>
+          <ul class="profile-logout">
+            <li class="Profile-menu-item">
+              <a th:onclick="|window.location.href='/logout'|">Logout</a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

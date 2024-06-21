@@ -500,9 +500,10 @@ button.secondary:hover {
     }
 }
 
-.dropdown-menu .dropdown-items li:hover, .small-icon:hover {
+.dropdown-menu .dropdown-items li:hover, .small-icon:hover, .profile-logout:hover {
     background-color: #eaeaea;
     box-shadow: none;
+    cursor: pointer;
 }
 
 .profile-menu {
@@ -524,6 +525,7 @@ button.secondary:hover {
 .account-menu {
     padding: 1rem 1rem;
     font-size: 11px;
+    border-bottom: 1px solid #E1E1E1;
 
     li {
         padding: 0;
@@ -537,4 +539,13 @@ button.secondary:hover {
          width: 75px;
          height: 75px;
      }
+}
+
+.profile-logout {
+    margin: 6px 0;
+    list-style: none;
+    box-sizing: inherit;
+    padding: 8px 16px;
+    font-size: 14px;
+    line-height: 1.5;
 }

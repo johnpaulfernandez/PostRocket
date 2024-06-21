@@ -1,5 +1,6 @@
 package org.perscholas.capstone.postrocket.services;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.perscholas.capstone.postrocket.dto.UserDTO;
 import org.perscholas.capstone.postrocket.models.User;
@@ -20,4 +21,6 @@ public interface UserService extends UserDetailsService {
     public void create(UserDTO userDTO);
 
     public UserDetails loadUserByUsername(String email);
+
+    void deleteSessionAttribute(HttpSession session, String user);
 }

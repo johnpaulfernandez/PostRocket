@@ -1,5 +1,6 @@
 package org.perscholas.capstone.postrocket.services;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.Setter;
 import org.perscholas.capstone.postrocket.dto.UserDTO;
@@ -56,6 +57,14 @@ public class UserServiceImpl implements UserService {
         setUser(user);
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+    }
+
+    @Override
+    public void deleteSessionAttribute(HttpSession session, String attributeName) {
+        if (session != null) {
+            session.removeAttribute(attributeName);
+            setUser(null);
+        }
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
