@@ -1,11 +1,6 @@
 package org.perscholas.capstone.postrocket.controllers;
 
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
-import org.perscholas.capstone.postrocket.dto.UserDTO;
 import org.perscholas.capstone.postrocket.models.GeneratedPost;
 import org.perscholas.capstone.postrocket.models.Request;
 import org.perscholas.capstone.postrocket.models.User;
@@ -18,17 +13,14 @@ import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -64,8 +56,12 @@ public class EventsController {
     }
 
     @GetMapping("/create/events")
-    public String showEventsPage(UserInput userInput, Model model) {
-        model.addAttribute("user", userServiceImpl.getUser());
+    public String showEventsPage(@AuthenticationPrincipal UserDetails userDetails, UserInput userInput, Model model) {
+        if(userDetails != null) {
+            String username = userDetails.getUsername();
+            User user = userServiceImpl.getUserByEmail(username);
+            model.addAttribute("user", user);
+        }
         model.addAttribute("userInput", userInput);
         return "events";
     }

@@ -1,25 +1,14 @@
 package org.perscholas.capstone.postrocket.controllers;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
-import org.perscholas.capstone.postrocket.dto.UserDTO;
 import org.perscholas.capstone.postrocket.models.GeneratedPost;
 import org.perscholas.capstone.postrocket.models.Request;
 import org.perscholas.capstone.postrocket.models.User;
-import org.perscholas.capstone.postrocket.models.UserInput;
 import org.perscholas.capstone.postrocket.services.*;
-import org.springframework.ai.chat.model.Generation;
-import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.chat.prompt.PromptTemplate;
-import org.springframework.ai.converter.BeanOutputConverter;
-import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,12 +33,12 @@ public class DashboardController {
     }
 
     @GetMapping("/dashboard")
-    public String showDashboardPage(ModelMap map, @RequestParam(defaultValue = "false") boolean sortByTitleAsc) {
-        return getDashboardData(map, sortByTitleAsc);
+    public String showDashboardPage(@AuthenticationPrincipal UserDetails userDetails, ModelMap map, @RequestParam(defaultValue = "false") boolean sortByTitleAsc) {
+        return getDashboardData(userDetails, map, sortByTitleAsc);
     }
 
     @PostMapping("/dashboard/events/{postId}")
-    public String updatePost(@PathVariable("postId") long postId, @ModelAttribute GeneratedPost post, ModelMap map, @RequestParam("_method") String method)
+    public String updatePost(@PathVariable("postId") long postId, @ModelAttribute GeneratedPost post, @AuthenticationPrincipal UserDetails userDetails, ModelMap map, @RequestParam("_method") String method)
     {
         if (method.equals("EDIT")) {
             try {
@@ -74,24 +63,28 @@ public class DashboardController {
             }
         }
 
-        return getDashboardData(map, true);
+        return getDashboardData(userDetails, map, true);
 
     }
 
-    private String getDashboardData(ModelMap map, boolean ascendingOrder) {
-        User user = userServiceImpl.getUser();
-        map.addAttribute("user", user);
-        map.addAttribute("role", user.getRoles());
+    private String getDashboardData(UserDetails userDetails, ModelMap map, boolean ascendingOrder) {
+        if(userDetails != null) {
+            String username = userDetails.getUsername();
+            User user = userServiceImpl.getUserByEmail(username);
+            map.addAttribute("user", user);
 
-        List<Request> requests;
+            List<Request> requests;
 
-        if (ascendingOrder) {
-            requests = requestService.getRequestsByUserIdAsc(userServiceImpl.getUserByEmail(user.getEmail()).getId());
+            if (ascendingOrder) {
+                requests = requestService.getRequestsByUserIdAsc(userServiceImpl.getUserByEmail(user.getEmail()).getId());
+            } else {
+                requests = requestService.getRequestsByUserIdDesc(userServiceImpl.getUserByEmail(user.getEmail()).getId());
+            }
+            map.addAttribute("requests", requests);
+
+            return "dashboard";
         } else {
-            requests = requestService.getRequestsByUserIdDesc(userServiceImpl.getUserByEmail(user.getEmail()).getId());
+            return "home";
         }
-        map.addAttribute("requests", requests);
-
-        return "dashboard";
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -45,7 +44,6 @@ public class SecurityConfig {
                                 .requestMatchers("/dashboard", "/dashboard/events/*", "/create/events/save").authenticated()
                                 .anyRequest().authenticated()
                 )
-
                 .formLogin(form -> form
                         .loginPage("/signin")
                         .loginProcessingUrl("/signin")
