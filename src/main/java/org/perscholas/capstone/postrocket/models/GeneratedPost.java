@@ -20,7 +20,7 @@ public class GeneratedPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String post;
 
     @Column(columnDefinition = "TEXT")
